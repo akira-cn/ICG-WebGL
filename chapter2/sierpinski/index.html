@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sierpinski</title>
+  <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec4 vPosition;
+    
+    void
+    main()
+    {
+      gl_PointSize = 1.0;
+      gl_Position = vPosition;
+    }
+    </script>
+    
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+    
+    void
+    main()
+    {
+      gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    }
+  </script>
+  <script type="text/javascript" src="/vendor/webgl-utils.js"></script>
+  <script type="text/javascript" src="/vendor/initShaders.js"></script>
+  <script type="text/javascript" src="/vendor/gl-matrix.js"></script>
+</head>
+<body>
+  <canvas id="gl-canvas" width="512" height="512"></canvas>
+  <script>
+    let gl;
+    let points;
+
+    const NumPoints = 5000;
+    const vec2 = glMatrix.vec2;
+
+    function init() {
+      const canvas = document.getElementById('gl-canvas');
+      gl = WebGLUtils.setupWebGL(canvas);
+
+      if(!gl) {
+        console.error('WebGL isn\'t available');
+      }
+
+      //
+      //  Initialize our data for the Sierpinski Gasket
+      //
+
+      // First, initialize the corners of our gasket with three points.
+
+      const vertices = [
+        vec2.set(vec2.create(), -1, -1),
+        vec2.set(vec2.create(), 0, 1),
+        vec2.set(vec2.create(), 1, -1),
+      ];
+
+      // Specify a starting point p for our iterations
+      // p must lie inside any set of three vertices
+
+      const u = vec2.add(vec2.create(), vertices[0], vertices[1]);
+      const v = vec2.add(vec2.create(), vertices[0], vertices[2]);
+      let p = vec2.scale(vec2.create(), vec2.add(vec2.create(), u, v), 0.25);
+
+      // And, add our initial point into our array of points
+
+      points = [p];
+
+      // Compute new points
+      // Each new point is located midway between
+      // last point and a randomly chosen vertex
+
+      for(let i = 0; points.length < NumPoints; ++i) {
+        const j = Math.floor(Math.random() * 3);
+        p = vec2.add(vec2.create(), points[i], vertices[j]);
+        vec2.scale(p, p, 0.5);
+        points.push(p);
+      }
+
+      //
+      //  Configure WebGL
+      //
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(1.0, 1.0, 1.0, 1.0);
+
+      //  Load shaders and initialize attribute buffers
+
+      const program = initShaders(gl, 'vertex-shader', 'fragment-shader');
+      gl.useProgram(program);
+
+      // Load the data into the GPU
+
+      const bufferId = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points.reduce((a, b) => [...a, ...b])), gl.STATIC_DRAW);
+      // Associate out shader variables with our data buffer
+
+      const vPosition = gl.getAttribLocation(program, 'vPosition');
+      gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(vPosition);
+
+      render();
+    }
+
+    function render() {
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.POINTS, 0, points.length);
+    }
+
+    init();
+  </script>
+</body>
+</html>
