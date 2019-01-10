@@ -1,8 +1,5 @@
 module.exports = {
   globals: {
-    spritejs: true,
-    WebGLUtils: true,
-    glMatrix: true,
   },
   extends:  "eslint-config-sprite",
   plugins: ['html'],

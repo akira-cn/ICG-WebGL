@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --watch-poll",
+    "chapter2": "webpack-dev-server --watch-poll --env.server=chapter2",
+    "build": "rm -rf dist && webpack --env.production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,14 +21,19 @@
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
     "eslint": "^5.12.0",
     "eslint-config-sprite": "^1.0.6",
     "eslint-plugin-html": "^5.0.0",
+    "glsl-shader-loader": "^0.1.6",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@babel/runtime": "^7.2.0",
     "gl-matrix": "^3.0.0"
   }
 }

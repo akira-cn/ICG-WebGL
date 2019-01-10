@@ -13,7 +13,7 @@
 - 增加练习题参考答案
 - 替换MV.js和MV2.js为[gl-matrix](https://github.com/toji/gl-matrix)
 - 重写部分Utils功能，组织到一个简单的工具库GLHelper中
-- 使用Webpack打包
+- 使用Webpack打包，使用[glsl-shader-loader](https://github.com/migalooo/glsl-shader-loader)加载shader文件
 - 使用[eslint-config-sprite](https://github.com/spritejs/eslint-config-sprite)
 - 部分练习提供其他参考实现版本，比如[THREE.js](https://github.com/mrdoob/three.js)实现版本。
 - 增加其他扩展例子实现
@@ -27,6 +27,14 @@ npm start
 ```
 
 访问 http://localhost:3000
+
+或者也可以独立运行某一章节的例子：
+
+```bash
+npm run chapter2
+```
+
+上面的命令运行第二章的例子。
 
 ## License
 
