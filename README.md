@@ -8,7 +8,7 @@
 
 我们将重写官方实例的例子：
 
-- 重构示例代码，增加必要的注释
+- 重构示例代码，增加必要的注释
 - 使用Babel7
 - 增加练习题参考答案
 - 替换MV.js和MV2.js为[gl-matrix](https://github.com/toji/gl-matrix)
