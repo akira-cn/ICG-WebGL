@@ -1,2 +1,5 @@
+.git
+node_modules
 lib
 vendor
+dist

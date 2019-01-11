@@ -83,3 +83,7 @@ export function initShaders(gl, vertex, fragment) {
 
   return program;
 }
+
+export function pointsToBuffer(points) {
+  return new Float32Array(points.reduce((a, b) => [...a, ...b]));
+}

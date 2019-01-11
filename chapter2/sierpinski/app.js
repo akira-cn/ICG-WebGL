@@ -1,4 +1,4 @@
-import {initShaders, setupWebGL} from 'GLHelper';
+import {initShaders, setupWebGL, pointsToBuffer} from 'GLHelper';
 import {vec2} from 'gl-matrix';
 
 import vertexShader from './vertex.glsl';
@@ -66,7 +66,7 @@ function init() {
 
   const bufferId = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points.reduce((a, b) => [...a, ...b])), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
   const vPosition = gl.getAttribLocation(program, 'vPosition');
