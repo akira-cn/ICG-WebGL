@@ -12,21 +12,27 @@ module.exports = function (env = {}) {
 
   const plugins = [];
 
+  const entry = {
+    gasket: './chapter2/gasket/app',
+    gasket2: './chapter2/gasket2/app',
+  };
+
   if(env.production) {
-    plugins.push(
-      new HtmlWebpackPlugin({
-        template: './src/assets/template.html',
-        chunks: ['sierpinski'],
-        filename: 'sierpinski.html',
-      })
-    );
+    Object.keys(entry).forEach((key) => {
+      plugins.push(
+        new HtmlWebpackPlugin({
+          template: './src/assets/template.html',
+          title: key,
+          chunks: [key],
+          filename: `${key}.html`,
+        })
+      );
+    });
   }
 
   return {
     mode: env.production ? 'production' : 'none',
-    entry: {
-      sierpinski: './chapter2/sierpinski/app',
-    },
+    entry,
     output,
     resolve: {
       alias: {
