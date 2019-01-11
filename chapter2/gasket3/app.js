@@ -40,9 +40,9 @@ function init() {
   // First, initialize the corners of our gasket with three points.
 
   const vertices = [
-    vec2.set(vec2.create(), -1, -1),
-    vec2.set(vec2.create(), 0, 1),
-    vec2.set(vec2.create(), 1, -1),
+    vec2.fromValues(-1, -1),
+    vec2.fromValues(0, 1),
+    vec2.fromValues(1, -1),
   ];
 
   divideTriangle(...vertices);

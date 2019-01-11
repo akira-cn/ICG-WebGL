@@ -66,10 +66,10 @@ function init() {
   // First, initialize the corners of our gasket with three points.
 
   const vertices = [
-    vec3.set(vec3.create(), 0.0000, 0.0000, -1.0000),
-    vec3.set(vec3.create(), 0.0000, 0.9428, 0.3333),
-    vec3.set(vec3.create(), -0.8165, -0.4714, 0.3333),
-    vec3.set(vec3.create(), 0.8165, -0.4714, 0.3333),
+    vec3.fromValues(0.0000, 0.0000, -1.0000),
+    vec3.fromValues(0.0000, 0.9428, 0.3333),
+    vec3.fromValues(-0.8165, -0.4714, 0.3333),
+    vec3.fromValues(0.8165, -0.4714, 0.3333),
   ];
 
   divideTetra(...vertices);
