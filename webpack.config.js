@@ -15,6 +15,8 @@ module.exports = function (env = {}) {
   const entry = {
     gasket: './chapter2/gasket/app',
     gasket2: './chapter2/gasket2/app',
+    gasket3: './chapter2/gasket3/app',
+    gasket4: './chapter2/gasket4/app',
   };
 
   if(env.production) {
