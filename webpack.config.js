@@ -17,6 +17,8 @@ module.exports = function (env = {}) {
     gasket2: './chapter2/gasket2/app',
     gasket3: './chapter2/gasket3/app',
     gasket4: './chapter2/gasket4/app',
+    mountains: './chapter2/mountains/app',
+    koch: './chapter2/koch/app',
   };
 
   if(env.production) {

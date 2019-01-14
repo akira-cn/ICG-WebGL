@@ -30,7 +30,6 @@ function tetra(a, b, c, d) {
   triangle(b, c, d, BLACK);
 }
 
-
 function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
   if(count <= 0) {
     tetra(a, b, c, d);
