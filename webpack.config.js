@@ -20,6 +20,7 @@ module.exports = function (env = {}) {
     mountains: './chapter2/mountains/app',
     koch: './chapter2/koch/app',
     rotation: './chapter3/rotation/app',
+    rotation_control: './chapter3/rotation_control/app',
   };
 
   if(env.production) {
