@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --watch-poll",
     "chapter2": "webpack-dev-server --watch-poll --env.server=chapter2",
+    "chapter3": "webpack-dev-server --watch-poll --env.server=chapter3",
     "build": "rm -rf dist && webpack --env.production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
