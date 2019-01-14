@@ -15,12 +15,6 @@ function init() {
     console.error('WebGL isn\'t available');
   }
 
-  //
-  //  Initialize our data for the Sierpinski Gasket
-  //
-
-  // First, initialize the corners of our gasket with three points.
-
   const vertices = [
     vec2.fromValues(0.0, 0.5),
     vec2.fromValues(0.5, 0.0),
