@@ -7,22 +7,27 @@ import fragmentShader from './fragment.glsl';
 let gl;
 
 const points = [];
-const numTimesToSubdivide = 5;
+const MAX_DEPTH = 5;
 
-function divideTriangle(a, b, c, count = numTimesToSubdivide) {
-  if(count <= 0) {
-    points.push(a, b, c);
+function divideLineSegment(a, b, depth = 0) {
+  const c = vec2.lerp(vec2.create(), a, b, 1 / 3);
+  const d = vec2.lerp(vec2.create(), a, b, 2 / 3);
+  const e = vec2.rotate(vec2.create(), d, c, Math.PI / 3);
+  if(depth < MAX_DEPTH) {
+    depth++;
+    divideLineSegment(a, c, depth);
+    divideLineSegment(c, e, depth);
+    divideLineSegment(e, d, depth);
+    divideLineSegment(d, b, depth);
   } else {
-    const ab = vec2.lerp(vec2.create(), a, b, 0.5);
-    const ac = vec2.lerp(vec2.create(), a, c, 0.5);
-    const bc = vec2.lerp(vec2.create(), b, c, 0.5);
-
-    --count;
-
-    divideTriangle(a, ab, ac, count);
-    divideTriangle(c, ac, bc, count);
-    divideTriangle(b, bc, ab, count);
+    points.push(a, c, e, d, b);
   }
+}
+
+function divideTriangle(a, b, c) {
+  divideLineSegment(a, b);
+  divideLineSegment(b, c);
+  divideLineSegment(c, a);
 }
 
 function init() {
@@ -33,16 +38,10 @@ function init() {
     console.error('WebGL isn\'t available');
   }
 
-  //
-  //  Initialize our data for the Sierpinski Gasket
-  //
-
-  // First, initialize the corners of our gasket with three points.
-
   const vertices = [
-    vec2.fromValues(-1, -1),
-    vec2.fromValues(0, 1),
-    vec2.fromValues(1, -1),
+    vec2.fromValues(-0.5, -0.5),
+    vec2.fromValues(0, 0.5),
+    vec2.fromValues(0.5, -0.5),
   ];
 
   divideTriangle(...vertices);
@@ -74,7 +73,7 @@ function init() {
 
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.TRIANGLES, 0, points.length);
+  gl.drawArrays(gl.LINE_STRIP, 0, points.length);
 }
 
 init();

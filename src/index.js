@@ -49,7 +49,7 @@ export function setupWebGL(canvas, opt_attribs) {
   return context;
 }
 
-export function initShaders(gl, vertex, fragment) {
+export function createProgram(gl, vertex, fragment) {
   const vertShdr = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertShdr, vertex);
   gl.compileShader(vertShdr);
@@ -85,5 +85,14 @@ export function initShaders(gl, vertex, fragment) {
 }
 
 export function pointsToBuffer(points) {
-  return new Float32Array(points.reduce((a, b) => [...a, ...b]));
+  const deminsion = points[0].length;
+  const len = points.length;
+  const buffer = new Float32Array(deminsion * len);
+  let idx = 0;
+  for(let i = 0; i < len; i++) {
+    for(let j = 0; j < deminsion; j++) {
+      buffer[idx++] = points[i][j];
+    }
+  }
+  return buffer;
 }

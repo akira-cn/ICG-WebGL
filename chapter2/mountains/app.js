@@ -9,13 +9,17 @@ let gl;
 const points = [];
 const numTimesToSubdivide = 5;
 
+function perturb(value, range = 0.2) {
+  return value * (1 + 2 * range * (Math.random() - 0.5));
+}
+
 function divideTriangle(a, b, c, count = numTimesToSubdivide) {
   if(count <= 0) {
     points.push(a, b, c);
   } else {
-    const ab = vec2.lerp(vec2.create(), a, b, 0.5);
-    const ac = vec2.lerp(vec2.create(), a, c, 0.5);
-    const bc = vec2.lerp(vec2.create(), b, c, 0.5);
+    const ab = vec2.lerp(vec2.create(), a, b, perturb(0.5));
+    const ac = vec2.lerp(vec2.create(), a, c, perturb(0.5));
+    const bc = vec2.lerp(vec2.create(), b, c, perturb(0.5));
 
     --count;
 
@@ -32,12 +36,6 @@ function init() {
   if(!gl) {
     console.error('WebGL isn\'t available');
   }
-
-  //
-  //  Initialize our data for the Sierpinski Gasket
-  //
-
-  // First, initialize the corners of our gasket with three points.
 
   const vertices = [
     vec2.fromValues(-1, -1),

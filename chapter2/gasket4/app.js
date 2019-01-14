@@ -1,4 +1,4 @@
-import {initShaders, setupWebGL, pointsToBuffer} from 'GLHelper';
+import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
 import {vec3} from 'gl-matrix';
 
 import vertexShader from './vertex.glsl';
@@ -29,7 +29,6 @@ function tetra(a, b, c, d) {
   triangle(a, b, d, BLUE);
   triangle(b, c, d, BLACK);
 }
-
 
 function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
   if(count <= 0) {
@@ -82,7 +81,7 @@ function init() {
 
   //  Load shaders and initialize attribute buffers
 
-  const program = initShaders(gl, vertexShader, fragmentShader);
+  const program = createProgram(gl, vertexShader, fragmentShader);
   gl.useProgram(program);
 
   // enable hidden-surface removal
