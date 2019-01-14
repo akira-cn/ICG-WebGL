@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // eslint-disable-line
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // eslint-disable-line
 
 module.exports = function (env = {}) {
   const outputPath = path.resolve(__dirname, env.outputPath || 'dist');
@@ -18,6 +18,8 @@ module.exports = function (env = {}) {
     gasket3: './chapter2/gasket3/app',
     gasket4: './chapter2/gasket4/app',
     mountains: './chapter2/mountains/app',
+    mountains1: './chapter2/mountains1/app',
+    mountains1Three: './chapter2/mountains1Three/app',
     koch: './chapter2/koch/app',
     rotation: './chapter3/rotation/app',
     rotation_control: './chapter3/rotation_control/app',
@@ -86,7 +88,6 @@ module.exports = function (env = {}) {
 
     plugins,
     // list of additional plugins
-
 
     /* Advanced configuration (click to show) */
   };
