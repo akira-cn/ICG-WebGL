@@ -21,6 +21,7 @@ module.exports = function (env = {}) {
     koch: './chapter2/koch/app',
     rotation: './chapter3/rotation/app',
     rotation_control: './chapter3/rotation_control/app',
+    rotation_color: './chapter3/rotation_color/app',
   };
 
   if(env.production) {
