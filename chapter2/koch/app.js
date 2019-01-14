@@ -1,4 +1,4 @@
-import {initShaders, setupWebGL, pointsToBuffer} from 'GLHelper';
+import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
 import {vec2} from 'gl-matrix';
 
 import vertexShader from './vertex.glsl';
@@ -54,7 +54,7 @@ function init() {
 
   //  Load shaders and initialize attribute buffers
 
-  const program = initShaders(gl, vertexShader, fragmentShader);
+  const program = createProgram(gl, vertexShader, fragmentShader);
   gl.useProgram(program);
 
   // Load the data into the GPU

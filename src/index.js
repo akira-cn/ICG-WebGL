@@ -49,7 +49,7 @@ export function setupWebGL(canvas, opt_attribs) {
   return context;
 }
 
-export function initShaders(gl, vertex, fragment) {
+export function createProgram(gl, vertex, fragment) {
   const vertShdr = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertShdr, vertex);
   gl.compileShader(vertShdr);
