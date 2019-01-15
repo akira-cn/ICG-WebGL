@@ -11,7 +11,7 @@ const hintEl = document.getElementById('hint');
 const maxNumVerticles = 4000;
 
 const colorPicker = document.getElementById('colorPicker');
-let color = parseColor(colorPicker.value);
+let color = parseColor(colorPicker.value, 'uv3');
 let pointsTemp = null;
 let colorTemp = null;
 let pointsCount = 0;
@@ -29,7 +29,7 @@ function makeRect(gl, vBuffer, cBuffer, ox, oy, w, h) {
     gl.bufferSubData(gl.ARRAY_BUFFER, 8 * pointsCount, pointsToBuffer([p1, p2, p3]));
 
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-    gl.bufferSubData(gl.ARRAY_BUFFER, 16 * pointsCount, pointsToBuffer([colorTemp, color, color]));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 3 * pointsCount, pointsToBuffer([colorTemp, color, color], Uint8Array));
     pointsTemp = null;
     colorTemp = null;
     pointsCount += 3;
@@ -41,7 +41,7 @@ function makeRect(gl, vBuffer, cBuffer, ox, oy, w, h) {
     gl.bufferSubData(gl.ARRAY_BUFFER, 8 * pointsCount, pointsToBuffer([pointsTemp]));
 
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-    gl.bufferSubData(gl.ARRAY_BUFFER, 16 * pointsCount, pointsToBuffer([colorTemp]));
+    gl.bufferSubData(gl.ARRAY_BUFFER, 3 * pointsCount, pointsToBuffer([colorTemp], Uint8Array));
 
     pointsCount++;
   }
@@ -80,14 +80,14 @@ function init() {
 
   const cBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, 16 * maxNumVerticles, gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, 3 * maxNumVerticles, gl.STATIC_DRAW);
 
   const vColor = gl.getAttribLocation(program, 'vColor');
-  gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
+  gl.vertexAttribPointer(vColor, 3, gl.UNSIGNED_BYTE, true, 0, 0);
   gl.enableVertexAttribArray(vColor);
 
   colorPicker.addEventListener('change', () => {
-    color = parseColor(colorPicker.value);
+    color = parseColor(colorPicker.value, 'uv3');
   });
 
   canvas.addEventListener('mousedown', (event) => {
