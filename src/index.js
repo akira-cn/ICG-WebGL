@@ -119,9 +119,9 @@ export function parseColor(colorStr, type = 'fv4') {
   } else if(type === 'fv4') {
     color = vec4.fromValues(r / 255, g / 255, b / 255, 1.0);
   } else if(type === 'uv3') {
-    color = [r, g, b];
+    color = new Uint8Array([r, g, b]);
   } else {
-    color = [r, g, b, 255];
+    color = new Uint8Array([r, g, b, 255]);
   }
   colorCache[type][colorStr] = color;
   return colorCache[type][colorStr];

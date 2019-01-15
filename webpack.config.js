@@ -25,6 +25,7 @@ module.exports = function (env = {}) {
     rotation_control: './chapter3/rotation_control/app',
     rotation_color: './chapter3/rotation_color/app',
     cad_rect: './chapter3/cad_rect/app',
+    cad_polygon: './chapter3/cad_polygon/app',
   };
 
   if(env.production) {
