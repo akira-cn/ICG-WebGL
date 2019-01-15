@@ -1,56 +1,56 @@
-const path = require('path');
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin"); // eslint-disable-line
 
-module.exports = function (env = {}) {
-  const outputPath = path.resolve(__dirname, env.outputPath || 'dist');
+module.exports = function(env = {}) {
+  const outputPath = path.resolve(__dirname, env.outputPath || "dist");
 
   const output = {
     path: outputPath,
-    filename: '[name]/app.js',
-    publicPath: '/',
+    filename: "[name]/app.js",
+    publicPath: "/"
   };
 
   const plugins = [];
 
   const entry = {
-    gasket: './chapter2/gasket/app',
-    gasket2: './chapter2/gasket2/app',
-    gasket3: './chapter2/gasket3/app',
-    gasket4: './chapter2/gasket4/app',
-    mountains: './chapter2/mountains/app',
-    mountains1: './chapter2/mountains1/app',
-    mountains1Three: './chapter2/mountains1Three/app',
-    koch: './chapter2/koch/app',
-    check_polygon: './chapter2/check_polygon/app',
-
-    rotation: './chapter3/rotation/app',
-    rotation_control: './chapter3/rotation_control/app',
-    rotation_color: './chapter3/rotation_color/app',
-    cad_rect: './chapter3/cad_rect/app',
-    cad_polygon: './chapter3/cad_polygon/app',
+    gasket: "./chapter2/gasket/app",
+    gasket2: "./chapter2/gasket2/app",
+    gasket3: "./chapter2/gasket3/app",
+    gasket4: "./chapter2/gasket4/app",
+    mountains: "./chapter2/mountains/app",
+    mountains1: "./chapter2/mountains1/app",
+    mountains1Three: "./chapter2/mountains1Three/app",
+    koch: "./chapter2/koch/app",
+    kochThree: "./chapter2/kochThree/app",
+    check_polygon: "./chapter2/check_polygon/app",
+    rotation: "./chapter3/rotation/app",
+    rotation_control: "./chapter3/rotation_control/app",
+    rotation_color: "./chapter3/rotation_color/app",
+    cad_rect: "./chapter3/cad_rect/app",
+    cad_polygon: "./chapter3/cad_polygon/app"
   };
 
-  if(env.production) {
+  if (env.production) {
     Object.keys(entry).forEach((key) => {
       plugins.push(
         new HtmlWebpackPlugin({
-          template: entry[key].replace(/app$/, 'index.html'),
+          template: entry[key].replace(/app$/, "index.html"),
           title: key,
           chunks: [],
-          filename: `${key}.html`,
+          filename: `${key}.html`
         })
       );
     });
   }
 
   return {
-    mode: env.production ? 'production' : 'none',
+    mode: env.production ? "production" : "none",
     entry,
     output,
     resolve: {
       alias: {
-        GLHelper: path.resolve(__dirname, 'src/index'),
-      },
+        GLHelper: path.resolve(__dirname, "src/index")
+      }
     },
 
     module: {
@@ -59,38 +59,38 @@ module.exports = function (env = {}) {
           test: /\.js$/,
           exclude: /node_modules\/.*/,
           use: {
-            loader: 'babel-loader',
-            options: {babelrc: true},
-          },
+            loader: "babel-loader",
+            options: { babelrc: true }
+          }
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
+          use: ["style-loader", "css-loader"]
         },
         {
           test: /\.(frag|vert|glsl)$/,
           use: {
-            loader: 'glsl-shader-loader',
-            options: {},
-          },
-        },
-      ],
+            loader: "glsl-shader-loader",
+            options: {}
+          }
+        }
+      ]
 
       /* Advanced module configuration (click to show) */
     },
     // Don't follow/bundle these modules, but request them at runtime from the environment
 
-    stats: 'errors-only',
+    stats: "errors-only",
     // lets you precisely control what bundle information gets displayed
 
     devServer: {
-      contentBase: path.join(__dirname, env.server || '.'),
+      contentBase: path.join(__dirname, env.server || "."),
       compress: true,
-      port: 3000,
+      port: 3000
       // ...
     },
 
-    plugins,
+    plugins
     // list of additional plugins
 
     /* Advanced configuration (click to show) */
