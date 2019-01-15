@@ -25,7 +25,7 @@ function isCross(p1, p2, p3, p4) {
   const z1 = vec2.cross(vec3.create(), v1, v2)[2];
   const z2 = vec2.cross(vec3.create(), v1, v3)[2];
 
-  return z1 * z2 < 0;
+  return z1 * z2 <= 0;
 }
 
 function checkSimple(newPoint) {
@@ -36,7 +36,7 @@ function checkSimple(newPoint) {
 
     // 判定新增的顶点的两条边和多边形其他边是否相交
     // 相交判断使用二维向量叉乘的符号来判断即可
-    // 优化点：可预先缓存多边形的各条边
+    // 优化点：可缓存边，减少重复计算
     for(let i = 1; i < len; i++) {
       const p1 = points[i - 1],
         p2 = points[i];
@@ -54,23 +54,34 @@ function checkSimple(newPoint) {
   }
 }
 
+let direction = 0;
+
 function checkConvex(newPoint) {
   if(isSimple && isConvex) {
     // 用多边形内角判断
     const len = points.length;
-    if(len < 3) return true;
+    if(len < 2) return true;
 
-    const lastPoint = points[len - 1];
-    const firstPoint = points[0];
+    // 优化点：可缓存边，减少重复计算
+    const edges = [
+      vec2.subtract(vec2.create(), points[len - 1], points[len - 2]),
+      vec2.subtract(vec2.create(), newPoint, points[len - 1]),
+      vec2.subtract(vec2.create(), points[0], newPoint),
+      vec2.subtract(vec2.create(), points[1], points[0]),
+    ];
 
-    const v1 = vec2.subtract(vec2.create(), points[1], firstPoint);
-    const v2 = vec2.subtract(vec2.create(), lastPoint, firstPoint);
-    const v3 = vec2.subtract(vec2.create(), newPoint, firstPoint);
-
-    const angle1 = vec2.angle(v1, v2);
-    const angle2 = vec2.angle(v1, v3);
-
-    isConvex = angle2 >= angle1;
+    for(let i = 1; i < 4; i++) {
+      const d = vec2.cross(vec3.create(), edges[i - 1], edges[i])[2];
+      if(d === 0) {
+        isConvex = false;
+        return;
+      }
+      if(direction === 0) direction = d > 0 ? 1 : -1;
+      else if(direction === 1 && d < 0 || direction === -1 && d > 0) {
+        isConvex = false;
+        return;
+      }
+    }
   }
 }
 
@@ -134,6 +145,7 @@ function init() {
     hintEl.className = '';
     isSimple = true;
     points.length = 0;
+    direction = 0;
   });
 
   colorLoc = gl.getUniformLocation(program, 'color');
