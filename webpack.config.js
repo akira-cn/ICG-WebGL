@@ -21,7 +21,7 @@ module.exports = function (env = {}) {
     mountains1: './chapter2/mountains1/app',
     mountains1Three: './chapter2/mountains1Three/app',
     koch: './chapter2/koch/app',
-    is_simple_polygon: './chapter2/is_simple_polygon/app',
+    check_polygon: './chapter2/check_polygon/app',
 
     rotation: './chapter3/rotation/app',
     rotation_control: './chapter3/rotation_control/app',
