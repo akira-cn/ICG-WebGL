@@ -1,5 +1,5 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec2, vec4} from 'gl-matrix';
+import {createProgram, setupWebGL, pointsToBuffer, parseColor} from 'GLHelper';
+import {vec2} from 'gl-matrix';
 
 import vertexShader from './shader.vert';
 import fragmentShader from './shader.frag';
@@ -49,18 +49,6 @@ function init() {
   colorLoc = gl.getUniformLocation(program, 'color');
 
   render();
-}
-
-const colorCache = {};
-function parseColor(colorStr) {
-  if(colorCache[colorStr]) {
-    return colorCache[colorStr];
-  }
-  const r = parseInt(colorStr.charAt(1) + colorStr.charAt(2), 16);
-  const g = parseInt(colorStr.charAt(3) + colorStr.charAt(4), 16);
-  const b = parseInt(colorStr.charAt(5) + colorStr.charAt(6), 16);
-  colorCache[colorStr] = vec4.fromValues(r / 255, g / 255, b / 255, 1.0);
-  return colorCache[colorStr];
 }
 
 const colorPicker = document.getElementById('colorPicker');

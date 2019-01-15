@@ -1,3 +1,5 @@
+import {vec4} from 'gl-matrix';
+
 export function create3DContext(canvas, opt_attribs) {
   const names = ['webgl', 'experimental-webgl', 'webkit-3d', 'moz-webgl'];
   let context = null;
@@ -95,4 +97,16 @@ export function pointsToBuffer(points) {
     }
   }
   return buffer;
+}
+
+const colorCache = {};
+export function parseColor(colorStr) {
+  if(colorCache[colorStr]) {
+    return colorCache[colorStr];
+  }
+  const r = parseInt(colorStr.charAt(1) + colorStr.charAt(2), 16);
+  const g = parseInt(colorStr.charAt(3) + colorStr.charAt(4), 16);
+  const b = parseInt(colorStr.charAt(5) + colorStr.charAt(6), 16);
+  colorCache[colorStr] = vec4.fromValues(r / 255, g / 255, b / 255, 1.0);
+  return colorCache[colorStr];
 }
