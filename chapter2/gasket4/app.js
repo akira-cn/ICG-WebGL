@@ -1,8 +1,8 @@
 import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
 import {vec3} from 'gl-matrix';
 
-import vertexShader from './vertex.glsl';
-import fragmentShader from './fragment.glsl';
+import vertexShader from './shader.vert';
+import fragmentShader from './shader.frag';
 
 let gl;
 

@@ -1,33 +1,12 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
+import {createProgram, setupWebGL, pointsToBuffer, parseColor} from 'GLHelper';
 import {vec2} from 'gl-matrix';
 
 import vertexShader from './shader.vert';
 import fragmentShader from './shader.frag';
 
-let gl;
-
-const points = [];
-const numTimesToSubdivide = 5;
-
-function perturb(value, range = 0.2) {
-  return value * (1 + 2 * range * (Math.random() - 0.5));
-}
-
-function divideTriangle(a, b, c, count = numTimesToSubdivide) {
-  if(count <= 0) {
-    points.push(a, b, c);
-  } else {
-    const ab = vec2.lerp(vec2.create(), a, b, perturb(0.5));
-    const ac = vec2.lerp(vec2.create(), a, c, perturb(0.5));
-    const bc = vec2.lerp(vec2.create(), b, c, perturb(0.5));
-
-    --count;
-
-    divideTriangle(a, ab, ac, count);
-    divideTriangle(c, ac, bc, count);
-    divideTriangle(b, bc, ab, count);
-  }
-}
+let gl,
+  thetaLoc,
+  colorLoc;
 
 function init() {
   const canvas = document.getElementById('gl-canvas');
@@ -38,12 +17,11 @@ function init() {
   }
 
   const vertices = [
-    vec2.fromValues(-1, -1),
-    vec2.fromValues(0, 1),
-    vec2.fromValues(1, -1),
+    vec2.fromValues(0.0, 0.5),
+    vec2.fromValues(0.5, 0.0),
+    vec2.fromValues(-0.5, 0.0),
+    vec2.fromValues(0.0, -0.5),
   ];
-
-  divideTriangle(...vertices);
 
   //
   //  Configure WebGL
@@ -60,19 +38,35 @@ function init() {
 
   const bufferId = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
-  gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(vertices), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
   const vPosition = gl.getAttribLocation(program, 'vPosition');
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
+  thetaLoc = gl.getUniformLocation(program, 'theta');
+  colorLoc = gl.getUniformLocation(program, 'color');
+
   render();
 }
 
+const colorPicker = document.getElementById('colorPicker');
+
+let theta = 0.0;
+let color = parseColor(colorPicker.value);
+
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.TRIANGLES, 0, points.length);
+  gl.uniform1f(thetaLoc, theta);
+  gl.uniform4fv(colorLoc, color);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  theta += 0.02;
+  requestAnimationFrame(render);
 }
+
+colorPicker.addEventListener('change', () => {
+  color = parseColor(colorPicker.value);
+});
 
 init();

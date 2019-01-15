@@ -21,17 +21,22 @@ module.exports = function (env = {}) {
     mountains1: './chapter2/mountains1/app',
     mountains1Three: './chapter2/mountains1Three/app',
     koch: './chapter2/koch/app',
+    check_polygon: './chapter2/check_polygon/app',
+
     rotation: './chapter3/rotation/app',
     rotation_control: './chapter3/rotation_control/app',
+    rotation_color: './chapter3/rotation_color/app',
+    cad_rect: './chapter3/cad_rect/app',
+    cad_polygon: './chapter3/cad_polygon/app',
   };
 
   if(env.production) {
     Object.keys(entry).forEach((key) => {
       plugins.push(
         new HtmlWebpackPlugin({
-          template: './src/assets/template.html',
+          template: entry[key].replace(/app$/, 'index.html'),
           title: key,
-          chunks: [key],
+          chunks: [],
           filename: `${key}.html`,
         })
       );
