@@ -13,8 +13,20 @@ const maxNumVerticles = 4000;
 
 let colorLoc;
 let isSimple = true;
+let isConvex = true;
 
 const points = [];
+
+function isCross(p1, p2, p3, p4) {
+  const v1 = vec2.subtract(vec2.create(), p4, p3);
+  const v2 = vec2.subtract(vec2.create(), p1, p3);
+  const v3 = vec2.subtract(vec2.create(), p2, p3);
+
+  const z1 = vec2.cross(vec3.create(), v1, v2)[2];
+  const z2 = vec2.cross(vec3.create(), v1, v3)[2];
+
+  return z1 * z2 < 0;
+}
 
 function checkSimple(newPoint) {
   const len = points.length;
@@ -24,35 +36,41 @@ function checkSimple(newPoint) {
 
     // 判定新增的顶点的两条边和多边形其他边是否相交
     // 相交判断使用二维向量叉乘的符号来判断即可
-    // 可进一步优化点：可预先缓存多边形的各条边
+    // 优化点：可预先缓存多边形的各条边
     for(let i = 1; i < len; i++) {
       const p1 = points[i - 1],
         p2 = points[i];
 
-      const v0 = vec2.subtract(vec2.create(), p2, p1);
-      const v1 = vec2.subtract(vec2.create(), newPoint, p1);
-      const z1 = vec2.cross(vec3.create(), v0, v1)[2];
-
-      if(p2 !== lastPoint) {
-        const v2 = vec2.subtract(vec2.create(), lastPoint, p1);
-        const z2 = vec2.cross(vec3.create(), v0, v2)[2];
-
-        if(z1 * z2 < 0) {
-          isSimple = false;
-          return;
-        }
+      if(p2 !== lastPoint && isCross(p1, p2, lastPoint, newPoint) && isCross(lastPoint, newPoint, p1, p2)) {
+        isSimple = false;
+        return;
       }
 
-      if(p1 !== firstPoint) {
-        const v2 = vec2.subtract(vec2.create(), firstPoint, p1);
-        const z2 = vec2.cross(vec3.create(), v0, v2)[2];
-
-        if(z1 * z2 < 0) {
-          isSimple = false;
-          return;
-        }
+      if(p1 !== firstPoint && isCross(p1, p2, newPoint, firstPoint && isCross(newPoint, firstPoint, p1, p2))) {
+        isSimple = false;
+        return;
       }
     }
+  }
+}
+
+function checkConvex(newPoint) {
+  if(isSimple && isConvex) {
+    // 用多边形内角判断
+    const len = points.length;
+    if(len < 3) return true;
+
+    const lastPoint = points[len - 1];
+    const firstPoint = points[0];
+
+    const v1 = vec2.subtract(vec2.create(), points[1], firstPoint);
+    const v2 = vec2.subtract(vec2.create(), lastPoint, firstPoint);
+    const v3 = vec2.subtract(vec2.create(), newPoint, firstPoint);
+
+    const angle1 = vec2.angle(v1, v2);
+    const angle2 = vec2.angle(v1, v3);
+
+    isConvex = angle2 >= angle1;
   }
 }
 
@@ -68,6 +86,7 @@ function addVertex(vBuffer, ox, oy, w, h) {
   gl.bufferSubData(gl.ARRAY_BUFFER, 8 * idx, vertex);
 
   checkSimple(vertex);
+  checkConvex(vertex);
 
   points.push(vertex);
 }
@@ -124,7 +143,7 @@ function init() {
 
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.uniform4fv(colorLoc, parseColor(isSimple ? '#0000ff' : '#ff0000'));
+  gl.uniform4fv(colorLoc, parseColor(isSimple ? isConvex ? '#0000ff' : '#009900' : '#ff0000')); // eslint-disable-line no-nested-ternary
   if(points.length) {
     gl.drawArrays(gl.LINE_LOOP, 0, points.length);
   }
