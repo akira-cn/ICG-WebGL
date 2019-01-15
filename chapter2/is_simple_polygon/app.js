@@ -31,12 +31,11 @@ function checkSimple(newPoint) {
 
       const v0 = vec2.subtract(vec2.create(), p2, p1);
       const v1 = vec2.subtract(vec2.create(), newPoint, p1);
+      const z1 = vec2.cross(vec3.create(), v0, v1)[2];
 
       if(p2 !== lastPoint) {
         const v2 = vec2.subtract(vec2.create(), lastPoint, p1);
-
-        const z1 = vec2.cross(vec3.create(), v0, v1)[2],
-          z2 = vec2.cross(vec3.create(), v0, v2)[2];
+        const z2 = vec2.cross(vec3.create(), v0, v2)[2];
 
         if(z1 * z2 < 0) {
           isSimple = false;
@@ -46,9 +45,7 @@ function checkSimple(newPoint) {
 
       if(p1 !== firstPoint) {
         const v2 = vec2.subtract(vec2.create(), firstPoint, p1);
-
-        const z1 = vec2.cross(vec3.create(), v0, v1)[2],
-          z2 = vec2.cross(vec3.create(), v0, v2)[2];
+        const z2 = vec2.cross(vec3.create(), v0, v2)[2];
 
         if(z1 * z2 < 0) {
           isSimple = false;
