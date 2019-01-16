@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = function (env = {}) {
   const outputPath = path.resolve(__dirname, env.outputPath || 'dist');
@@ -45,6 +46,10 @@ module.exports = function (env = {}) {
         })
       );
     });
+  } else {
+    plugins.push(
+      new OpenBrowserPlugin({url: 'http://localhost:3000'})
+    );
   }
 
   return {
