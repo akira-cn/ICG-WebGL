@@ -8,13 +8,14 @@ let gl;
 let points;
 let counter = 0;
 const NumPoints = 5000;
-
+let startDraw = false;
+const otherTips = document.getElementById('ohterTips');
 function init() {
   const canvas = document.getElementById('gl-canvas');
   gl = setupWebGL(canvas);
 
   if(!gl) {
-    console.error('WebGL isn\'t available');
+    console.error("WebGL isn't available");
   }
 
   //
@@ -64,10 +65,8 @@ function init() {
 
   // Load the data into the GPU
 
-
   canvas.onmousedown = function (ev) {
-    getPoints();
-
+    mouseClickHandler(ev);
   };
 
   const bufferId = gl.createBuffer();
@@ -78,23 +77,39 @@ function init() {
   const vPosition = gl.getAttribLocation(program, 'vPosition');
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
+}
 
-  async function getPoints() {
-
-    await setTimeout(() => {
-
-    }, 1000);
-
-    counter++;
-    if(counter === 50) { return }
-    render(counter * 100);
-    getPoints();
+function mouseClickHandler(ev) {
+  console.log(ev.button);
+  if(ev.button == 0) {
+    startDraw = true;
+    draw();
+  } else if(ev.button == 1) {
+    startDraw = false;
+    counter = NumPoints;
+  } else if(ev.button == 2) {
+    startDraw = false;
   }
 }
 
+async function draw() {
+  counter++;
+  if(startDraw === false || counter > NumPoints) {
+    return;
+  }
+  render(counter);
+  await timeout(10);
+  draw();
+}
+
+function timeout(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 function render(n) {
-  console.log(n);
+  otherTips.innerHTML = `当前绘制点数量${n}`;
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.drawArrays(gl.POINTS, 0, n);
 }
