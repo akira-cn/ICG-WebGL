@@ -5,8 +5,18 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --watch-poll",
+    "chapter1": "webpack-dev-server --watch-poll --env.server=chapter1",
     "chapter2": "webpack-dev-server --watch-poll --env.server=chapter2",
     "chapter3": "webpack-dev-server --watch-poll --env.server=chapter3",
+    "chapter4": "webpack-dev-server --watch-poll --env.server=chapter4",
+    "chapter5": "webpack-dev-server --watch-poll --env.server=chapter5",
+    "chapter6": "webpack-dev-server --watch-poll --env.server=chapter6",
+    "chapter7": "webpack-dev-server --watch-poll --env.server=chapter7",
+    "chapter8": "webpack-dev-server --watch-poll --env.server=chapter8",
+    "chapter9": "webpack-dev-server --watch-poll --env.server=chapter9",
+    "chapter10": "webpack-dev-server --watch-poll --env.server=chapter10",
+    "chapter11": "webpack-dev-server --watch-poll --env.server=chapter11",
+    "chapter12": "webpack-dev-server --watch-poll --env.server=chapter12",
     "build": "rm -rf dist && webpack --env.production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
