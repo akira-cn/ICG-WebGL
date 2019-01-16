@@ -1,5 +1,6 @@
+const fs = require('fs');
 const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin"); // eslint-disable-line
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = function (env = {}) {
   const outputPath = path.resolve(__dirname, env.outputPath || 'dist');
@@ -12,24 +13,26 @@ module.exports = function (env = {}) {
 
   const plugins = [];
 
-  const entry = {
-    gasket: './chapter2/gasket/app',
-    gasket2: './chapter2/gasket2/app',
-    gasket3: './chapter2/gasket3/app',
-    gasket4: './chapter2/gasket4/app',
-    mountains: './chapter2/mountains/app',
-    mountains1: './chapter2/mountains1/app',
-    mountains1Three: './chapter2/mountains1Three/app',
-    koch: './chapter2/koch/app',
-    kochThree: './chapter2/kochThree/app',
-    check_polygon: './chapter2/check_polygon/app',
-    rotation: './chapter3/rotation/app',
-    rotation_control: './chapter3/rotation_control/app',
-    rotation_color: './chapter3/rotation_color/app',
-    cad_rect: './chapter3/cad_rect/app',
-    cad_polygon: './chapter3/cad_polygon/app',
-    gasket5: './chapter3/gasket5/app',
-  };
+  const entry = {};
+
+  function makeEntry(chapter) {
+    const root = path.resolve(__dirname, chapter);
+    const pa = fs.readdirSync(root);
+    pa.forEach((el) => {
+      const info = fs.statSync(path.resolve(root, el));
+      if(info.isDirectory()) {
+        const entryPath = path.resolve(root, el, 'app.js');
+        const isEntry = fs.existsSync(entryPath);
+        if(isEntry) {
+          entry[el] = entryPath;
+        }
+      }
+    });
+  }
+
+  for(let i = 1; i < 12; i++) {
+    makeEntry(`chapter${`0${i}`.slice(-2)}`);
+  }
 
   if(env.production) {
     Object.keys(entry).forEach((key) => {
