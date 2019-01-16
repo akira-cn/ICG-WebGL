@@ -31,7 +31,7 @@ npm start
 或者也可以独立运行某一章节的例子：
 
 ```bash
-npm run chapter2
+npm run chapter02
 ```
 
 上面的命令运行第二章的例子。

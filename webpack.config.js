@@ -31,7 +31,7 @@ module.exports = function (env = {}) {
   }
 
   for(let i = 1; i < 12; i++) {
-    makeEntry(`chapter${i}`);
+    makeEntry(`chapter${`0${i}`.slice(-2)}`);
   }
 
   if(env.production) {
