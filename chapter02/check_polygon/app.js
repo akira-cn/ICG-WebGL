@@ -30,7 +30,7 @@ function isCross(p1, p2, p3, p4) {
 
 function checkSimple(newPoint) {
   const len = points.length;
-  if(isSimple && len >= 3) {
+  if(isSimple !== false && len >= 3) {
     const lastPoint = points[len - 1];
     const firstPoint = points[0];
 
@@ -46,18 +46,19 @@ function checkSimple(newPoint) {
         return;
       }
 
-      if(p1 !== firstPoint && isCross(p1, p2, newPoint, firstPoint && isCross(newPoint, firstPoint, p1, p2))) {
-        isSimple = false;
+      if(p1 !== firstPoint && isCross(p1, p2, newPoint, firstPoint) && isCross(newPoint, firstPoint, p1, p2)) {
+        isSimple = 0; // 临时 false
         return;
       }
     }
+    isSimple = true;
   }
 }
 
 let direction = 0;
 
 function checkConvex(newPoint) {
-  if(isSimple && isConvex) {
+  if(isSimple !== false && isConvex) {
     // 用多边形内角判断
     const len = points.length;
     if(len < 2) return true;
