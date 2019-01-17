@@ -118,7 +118,7 @@ function triangleDivide(points, map, idx) {
       const p = [...points];
       p.splice(i, 1);
 
-      if(isSimple(p)) {
+      if(isSimple(p) && getDirection(p) === d) {
         return [map.get(points[(len + i - 1) % len]) + idx,
           map.get(points[i]) + idx,
           map.get(points[(i + 1) % len]) + idx, ...triangleDivide(p, map, idx)];
@@ -134,6 +134,8 @@ function setIndices(iBuffer, points) {
   const polygon = polygons[polygons.length - 1];
   const idx = polygon.index;
   const indices = triangleDivide(points, map, idx);
+
+  console.log(indices);
 
   polygon.vertexes = indices.length;
 
