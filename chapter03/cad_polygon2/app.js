@@ -135,8 +135,6 @@ function setIndices(iBuffer, points) {
   const idx = polygon.index;
   const indices = triangleDivide(points, map, idx);
 
-  console.log(indices);
-
   polygon.vertexes = indices.length;
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer);
