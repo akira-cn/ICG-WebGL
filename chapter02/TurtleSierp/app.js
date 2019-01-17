@@ -108,11 +108,37 @@ class Turtle {
   }
 }
 
-const turtle = new Turtle();
-for(let i = 0; i < 360 * 3; i += 5) {
-  turtle.theta = i;
-  for(let j = 0; j < 4; j++) {
-    turtle.forward((1 / 360 / 5) * i);
-    turtle.right(90);
+const numTimesToSubdivide = 1;
+const MAX_LENGTH = 2;
+
+function divideTriangle(t, length = MAX_LENGTH, count = numTimesToSubdivide) {
+  if(count <= 0) {
+    for(let i = 0; i < 3; i++) {
+      t.forward(length);
+      t.left(120);
+    }
+  } else {
+    // 在原点绘制第一个三角形
+    divideTriangle(t, length / 2, count - 1);
+    // 移动到水平边的中点绘制第二个三角形
+    t.forward(length / 2);
+    divideTriangle(t, length / 2, count - 1);
+    // 回到原点
+    t.forward(-length / 2);
+    // 前往侧边边的中点
+    t.left(60);
+    t.forward(length / 2);
+    // 角度调整为水平
+    t.right(60);
+    // 绘制一个三角形
+    divideTriangle(t, length / 2, count - 1);
+    // 回到原点
+    t.left(60);
+    t.forward(-length / 2);
+    t.right(60);
   }
 }
+
+// 起点为(-1,-1)
+const turtle = new Turtle(-1, -1, 0);
+divideTriangle(turtle);
