@@ -108,7 +108,7 @@ class Turtle {
   }
 }
 
-const numTimesToSubdivide = 1;
+const numTimesToSubdivide = 5;
 const MAX_LENGTH = 2;
 
 function divideTriangle(t, length = MAX_LENGTH, count = numTimesToSubdivide) {
