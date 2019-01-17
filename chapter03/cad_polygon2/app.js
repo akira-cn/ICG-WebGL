@@ -221,6 +221,7 @@ function init() {
     if(previousPolygon.vertexes >= 3) {
       hintEl.className = '';
       if(isSimple(points)) {
+        previousPolygon.isSimple = true;
         setIndices(iBuffer, points);
       }
       polygons.push({
@@ -242,8 +243,11 @@ function render() {
     if(polygon.vertexes) {
       const isClosed = i < len - 1;
       if(isClosed) {
-        // gl.drawArrays(gl.LINE_LOOP, polygon.index, polygon.vertexes);
-        gl.drawElements(gl.TRIANGLES, polygon.vertexes, gl.UNSIGNED_BYTE, polygon.index);
+        if(polygon.isSimple) {
+          gl.drawElements(gl.TRIANGLES, polygon.vertexes, gl.UNSIGNED_BYTE, polygon.index);
+        } else {
+          gl.drawArrays(gl.TRIANGLE_FAN, polygon.index, polygon.vertexes);
+        }
       } else {
         gl.drawArrays(gl.LINE_STRIP, polygon.index, polygon.vertexes);
       }
