@@ -102,3 +102,4 @@ function renderMaze(row, col, maze) {
 
 init();
 generateMazeBtn.addEventListener('click', drawMaze);
+drawMaze();
