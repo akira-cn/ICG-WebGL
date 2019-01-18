@@ -1,10 +1,14 @@
 # ICG-WebGL
 
+## [webgl.group](https://webgl.group/)
+
 这是[《交互式计算机图形学——基于WebGL的自顶向下方法（第七版）》](https://book.douban.com/subject/26916420/)这本书的每章示例和部分练习题参考实现。
 
 <img src="https://p5.ssl.qhimg.com/t01c52e0b46066ec4f8.jpg" width="300px">
 
 作者官方的示例代码在[这里](https://github.com/esangel/WebGL)。
+
+重构后的代码[在线运行](https://webgl.group/)
 
 我们将重写官方实例的例子：
 
