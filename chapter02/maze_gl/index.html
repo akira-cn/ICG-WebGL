@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Maze</title>
+  <style>
+    .control input {
+      width: 30px;
+    }  
+  </style>
+</head>
+<body>
+  <canvas id="gl-canvas" width="512" height="512"></canvas>
+  <div class="control">
+    <input id="mazeRows" type="input" value="10"> X <input id="mazeCols" type="input" value="10">
+    <button id="generateMaze">生成</button>
+  </div>
+  <script src="/maze_gl/app.js"></script>
+</body>
+</html>
