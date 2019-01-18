@@ -26,7 +26,7 @@
     "chapter10": "webpack-dev-server --watch-poll --env.server=chapter10",
     "chapter11": "webpack-dev-server --watch-poll --env.server=chapter11",
     "chapter12": "webpack-dev-server --watch-poll --env.server=chapter12",
-    "build": "rm -rf dist && webpack --env.production",
+    "build": "rm -rf docs && webpack --env.production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

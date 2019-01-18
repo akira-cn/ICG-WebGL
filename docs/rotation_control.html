@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rect Rotation</title>
+  <style>
+    #speed {
+      display: inline-block;
+      width: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div id="controller">
+    <select id="direction">
+      <option value="1">逆时针</option>
+      <option value="-1">顺时针</option>
+    </select>
+    速度：<span id="speed">20</span> <button id="speedUp">+</button>
+    <input id="speedRange" type="range" min="0" max="100" step="0" value="20">
+    <button id="slowDown">-</button>
+  </div>
+  <canvas id="gl-canvas" width="512" height="512"></canvas>
+  <script src="/rotation_control/app.js"></script>
+</body>
+</html>
