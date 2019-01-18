@@ -57,12 +57,15 @@ function drawMaze() {
 function renderMaze(row, col, maze) {
   const points = [];
 
+  const m = Math.max(row, col);
+
   // 生成所有的点
   for(let i = 0; i <= row; i++) {
     for(let j = 0; j <= col; j++) {
-      points.push([2 * (j / col) - 1, 1 - 2 * (i / row)]);
+      points.push([2 * (j / m) - col / m, row / m - 2 * (i / m)]);
     }
   }
+
   gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
   gl.bufferSubData(gl.ARRAY_BUFFER, 0, pointsToBuffer(points));
 
@@ -70,22 +73,22 @@ function renderMaze(row, col, maze) {
 
   for(let i = 0; i < row; i++) {
     for(let j = 0; j < col; j++) {
-      const a = i * (row + 1) + j + 1;
-      const b = (i + 1) * (row + 1) + j;
-      const c = (i + 1) * (row + 1) + j + 1;
+      const a = i * (col + 1) + j + 1;
+      const b = (i + 1) * (col + 1) + j;
+      const c = (i + 1) * (col + 1) + j + 1;
       const data = maze[i][j];
       if(data & 0b0010) indices.push(a, c);
       if(data & 0b0100) indices.push(b, c);
     }
   }
 
-  for(let i = 0; i < row; i++) {
+  for(let i = 0; i < col; i++) {
     indices.push(i, i + 1);
   }
 
-  for(let i = 0; i < col; i++) {
+  for(let i = 0; i < row; i++) {
     const data = maze[i][0];
-    if(data & 0b1000) indices.push(i * (row + 1), (i + 1) * (row + 1));
+    if(data & 0b1000) indices.push(i * (col + 1), (i + 1) * (col + 1));
   }
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer);
