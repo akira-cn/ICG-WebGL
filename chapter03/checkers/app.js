@@ -19,9 +19,9 @@ let gl;
 
 // 棋子大小
 const piecesSize = 0.05;
-const pieces = [];
+let pieces = [];
 const piecesIndices = [];
-const piecesColors = [];
+let piecesColors = [];
 const points = [];
 const colors = [];
 const indices = [];
@@ -29,6 +29,9 @@ const nums = [];
 const piecesNums = [];
 let counter = 0;
 let piecesCounter = 0;
+let isPieces1Clicked = false;
+let isPieces2Clicked = false;
+let lastPosition;
 // 棋盘建模，棋盘是1*1的单位矩阵
 //  v0------v3------|
 //  |  \     |  \   |
@@ -95,6 +98,28 @@ function gePiecesPoints() {
             [0, 1, 0],
             [0, 1, 0]
           );
+        } else if(gameBoard[i][j] == 3) {
+          piecesColors.push(
+            [1, 0, 0.5],
+            [1, 0, 0.5],
+            [1, 0, 0.5],
+            [1, 0, 0.5],
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 0, 1]
+          );
+        } else if(gameBoard[i][j] == 4) {
+          piecesColors.push(
+            [0, 0.5, 0],
+            [0, 0.5, 0],
+            [0, 0.5, 0],
+            [0, 0.5, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0]
+          );
         }
         pieces.push([
           center[0] - piecesSize / 2,
@@ -136,6 +161,15 @@ function gePiecesPoints() {
           center[1] - piecesSize / 2,
           0,
         ]);
+      }
+    }
+  }
+}
+
+function getPiecesIndex() {
+  for(let i = 0; i < 8; i++) {
+    for(let j = 0; j < 8; j++) {
+      if(gameBoard[i][j] != 0) {
         //    v0----- v3
         //   /|      /|
         //  v1------v2|
@@ -192,6 +226,19 @@ function gePiecesPoints() {
     }
   }
 }
+function getClickContent(num) {
+  const i = Math.floor((num % 64) / 8);
+  const j = (num % 64) % 8;
+  return [i, j];
+}
+
+
+function updateGameBoard() {
+  pieces = [];
+  piecesColors = [];
+
+  gePiecesPoints();
+}
 
 function getPiecesPointCenter(i, j) {
   return [(2 * j + 1) / 16, 1 - (2 * i + 1) / 16];
@@ -233,6 +280,7 @@ function init() {
 
   getBoardPoints();
   gePiecesPoints();
+  getPiecesIndex();
 
   const vColor = gl.getAttribLocation(program, 'a_Color');
   const vPosition = gl.getAttribLocation(program, 'a_Position');
@@ -287,12 +335,34 @@ function init() {
       const x_in_canvas = x - rect.left;
       const y_in_canvas = rect.bottom - y;
       const face = checkPieces(gl, x_in_canvas, y_in_canvas, u_PickedNumber, vColor, vPosition, vNumber);
-      console.log(face);
+      gl.uniform1i(u_PickedNumber, -1);
+      // console.log(face);
+      debugger;
+      // draw(gl, vColor, vPosition, vNumber);
+      const position = getClickContent(face - 1);
+      if(!isPieces1Clicked && !isPieces2Clicked) {
+        if(gameBoard[position[0]][position[1]] === 1) {
+          gameBoard[position[0]][position[1]] = 3;
+          isPieces1Clicked = true;
+        } else if(gameBoard[position[0]][position[1]] === 2) {
+          gameBoard[position[0]][position[1]] = 4;
+          isPieces2Clicked = true;
+        }
+        lastPosition = position;
+        updateGameBoard();
+      } else if(isPieces1Clicked && (position[0] + position[1]) % 2 != 0 && gameBoard[position[0]][position[1]] === 0) {
+        gameBoard[lastPosition[0]][lastPosition[1]] = 0;
+        gameBoard[position[0]][position[1]] = 1;
+        updateGameBoard();
+      } else if(isPieces2Clicked && (positionP[0] + position[1]) % 2 != 0 && gameBoard[position[0]][position[1]] === 0) {
+        gameBoard[lastPosition[0]][lastPosition[1]] = 0;
+        gameBoard[position[0]][position[1]] = 2;
+        updateGameBoard();
+      }
       draw(gl, vColor, vPosition, vNumber);
     }
   };
 }
-
 function draw(gl, vColor, vPosition, vNumber) {
   if(!initArrayBuffer(gl, vColor, pointsToBuffer(colors), gl.FLOAT, 3)) {
     return -1;
