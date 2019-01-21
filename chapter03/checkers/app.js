@@ -16,7 +16,6 @@ const gameBoard = [
 ];
 
 let gl;
-
 // 棋子大小
 const piecesSize = 0.05;
 let pieces = [];
@@ -26,12 +25,13 @@ const points = [];
 const colors = [];
 const indices = [];
 const nums = [];
-const piecesNums = [];
+let piecesNums = [];
 let counter = 0;
 let piecesCounter = 0;
 let isPieces1Clicked = false;
 let isPieces2Clicked = false;
 let lastPosition;
+
 // 棋盘建模，棋盘是1*1的单位矩阵
 //  v0------v3------|
 //  |  \     |  \   |
@@ -40,7 +40,6 @@ let lastPosition;
 //  |  \     |  \   |
 //  |    \   |    \ |
 //  | ------ |------|
-
 function getBoardPoints() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 8; j++) {
@@ -68,11 +67,11 @@ function getBoardPoints() {
   }
 }
 
+// 棋子建模
 function gePiecesPoints() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 8; j++) {
       if(gameBoard[i][j] != 0) {
-        console.log(gameBoard[i][j]);
         piecesNums.push(64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1,
           64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1);
         const center = getPiecesPointCenter(i, j);
@@ -166,6 +165,7 @@ function gePiecesPoints() {
   }
 }
 
+// 棋子三角索引
 function getPiecesIndex() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 8; j++) {
@@ -226,23 +226,27 @@ function getPiecesIndex() {
     }
   }
 }
+
+// 得到点击的二维坐标
 function getClickContent(num) {
   const i = Math.floor((num % 64) / 8);
   const j = (num % 64) % 8;
   return [i, j];
 }
 
-
+// 更新棋子布局
 function updateGameBoard() {
   pieces = [];
   piecesColors = [];
-
+  piecesNums = [];
   gePiecesPoints();
 }
 
+// 计算棋子绘制中心点
 function getPiecesPointCenter(i, j) {
   return [(2 * j + 1) / 16, 1 - (2 * i + 1) / 16];
 }
+
 function init() {
   const canvas = document.getElementById('gl-canvas');
   gl = setupWebGL(canvas);
@@ -317,7 +321,6 @@ function init() {
     return -1;
   }
 
-
   const piecesIndexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, piecesIndexBuffer);
   gl.bufferData(
@@ -327,6 +330,8 @@ function init() {
   );
 
   gl.drawElements(gl.TRIANGLES, piecesIndices.length, gl.UNSIGNED_BYTE, 0);
+
+  // 鼠标点击canvas
   canvas.onmousedown = function handlerMousedown(evt) {
     const x = evt.clientX;
     const y = evt.clientY;
@@ -336,7 +341,7 @@ function init() {
       const y_in_canvas = rect.bottom - y;
       const face = checkPieces(gl, x_in_canvas, y_in_canvas, u_PickedNumber, vColor, vPosition, vNumber);
       gl.uniform1i(u_PickedNumber, -1);
-      // console.log(face);
+      console.log(face);
       debugger;
       // draw(gl, vColor, vPosition, vNumber);
       const position = getClickContent(face - 1);
@@ -354,15 +359,19 @@ function init() {
         gameBoard[lastPosition[0]][lastPosition[1]] = 0;
         gameBoard[position[0]][position[1]] = 1;
         updateGameBoard();
-      } else if(isPieces2Clicked && (positionP[0] + position[1]) % 2 != 0 && gameBoard[position[0]][position[1]] === 0) {
+        isPieces1Clicked = false;
+      } else if(isPieces2Clicked && (position[0] + position[1]) % 2 != 0 && gameBoard[position[0]][position[1]] === 0) {
         gameBoard[lastPosition[0]][lastPosition[1]] = 0;
         gameBoard[position[0]][position[1]] = 2;
         updateGameBoard();
+        isPieces2Clicked = false;
       }
       draw(gl, vColor, vPosition, vNumber);
     }
   };
 }
+
+// 绘制canvas
 function draw(gl, vColor, vPosition, vNumber) {
   if(!initArrayBuffer(gl, vColor, pointsToBuffer(colors), gl.FLOAT, 3)) {
     return -1;
@@ -408,6 +417,7 @@ function draw(gl, vColor, vPosition, vNumber) {
   gl.drawElements(gl.TRIANGLES, piecesIndices.length, gl.UNSIGNED_BYTE, 0);
 }
 
+// 计算棋子在棋盘的二维索引
 function checkPieces(gl, x, y, u_PickedNumber, vColor, vPosition, vNumber) {
   const pixels = new Uint8Array(4); // Array for storing the pixel value
   gl.uniform1i(u_PickedNumber, 0); // Draw by writing surface number into alpha value
@@ -418,6 +428,7 @@ function checkPieces(gl, x, y, u_PickedNumber, vColor, vPosition, vNumber) {
   return pixels[3];
 }
 
+// 给buffer传值
 function initArrayBuffer(gl, a_attribute, data, type, num) {
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -426,13 +437,15 @@ function initArrayBuffer(gl, a_attribute, data, type, num) {
   gl.enableVertexAttribArray(a_attribute);
   return true;
 }
-function arrayToBuffer(indices, Type = Uint8Array) {
+
+// 类型转换
+function arrayToBuffer(arr, Type = Uint8Array) {
   const deminsion = 1;
-  const len = indices.length;
+  const len = arr.length;
   const buffer = new Type(deminsion * len);
   let idx = 0;
   for(let i = 0; i < len; i++) {
-    buffer[idx++] = indices[i];
+    buffer[idx++] = arr[i];
   }
   return buffer;
 }
