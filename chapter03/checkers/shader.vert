@@ -9,10 +9,10 @@ void main()
 {
   gl_Position = u_MvpMatrix * a_Position;
   int num = int(a_Number);
-  vec3 color = (num == u_PickedNumber)?vec3(1.0):a_Color.rgb;
+
   if(u_PickedNumber == 0){
-    v_Color = vec4(color, a_Number/255.0);
+    v_Color = vec4(a_Color.rgb, a_Number/255.0);
   }else{
-  v_Color = vec4(color, a_Color.a);
+  v_Color = a_Color;
   }
 }
