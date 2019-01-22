@@ -379,67 +379,85 @@ const btnZTranslateUp = document.getElementById('zTranslateUp');
 const btnZTranslateDown = document.getElementById('zTranslateDown');
 
 pitchRange.addEventListener('change', () => {
-  setPitch(parseInt(pitchRange.value));
+  setPitch(parseInt(pitchRange.value, 10));
 });
 btnPitchUp.addEventListener('click', () => {
-  setPitch(parseInt(pitchRange.value) + 2);
+  setPitch(parseInt(pitchRange.value, 10) + 2);
 });
 btnPitchDown.addEventListener('click', () => {
-  setPitch(parseInt(pitchRange.value) - 2);
+  setPitch(parseInt(pitchRange.value, 10) - 2);
 });
 yawRange.addEventListener('change', () => {
-  setYaw(parseInt(yawRange.value));
+  setYaw(parseInt(yawRange.value, 10));
 });
 btnYawUp.addEventListener('click', () => {
-  setYaw(parseInt(yawRange.value) + 2);
+  setYaw(parseInt(yawRange.value, 10) + 2);
 });
 btnYawDown.addEventListener('click', () => {
-  setYaw(parseInt(yawRange.value) - 2);
+  setYaw(parseInt(yawRange.value, 10) - 2);
 });
 xTranslateRange.addEventListener('change', () => {
   setXTranslate(parseFloat(xTranslateRange.value));
 });
 btnXTranslateUp.addEventListener('click', () => {
-  setXTranslate(parseFloat(xTranslateRange.value) + 0.2);
+  setXTranslate(Math.round((parseFloat(xTranslateRange.value) + 0.2) * 100) / 100);
 });
 btnXTranslateDown.addEventListener('click', () => {
-  setXTranslate(parseFloat(xTranslateRange.value) - 0.2);
+  setXTranslate(Math.round((parseFloat(xTranslateRange.value) - 0.2) * 100) / 100);
 });
 zTranslateRange.addEventListener('change', () => {
   setZTranslate(parseFloat(zTranslateRange.value));
 });
 btnZTranslateUp.addEventListener('click', () => {
-  setZTranslate(parseFloat(zTranslateRange.value) + 0.2);
+  setZTranslate(Math.round((parseFloat(zTranslateRange.value) + 0.2) * 100) / 100);
 });
 btnZTranslateDown.addEventListener('click', () => {
-  setZTranslate(parseFloat(zTranslateRange.value) - 0.2);
+  setZTranslate(Math.round((parseFloat(zTranslateRange.value) - 0.2) * 100) / 100);
 });
 
 function setPitch(val) {
+  if(val > parseInt(pitchRange.max, 0) || val < parseInt(pitchRange.min, 0)) { return }
+  resetControl();
   pitchRange.value = val;
   pitch.innerHTML = val;
   setMVPMatrix(2 * Math.PI * val / 360, 'rotatePitch');
   draw();
 }
 function setYaw(val) {
+  if(val > parseInt(yawRange.max, 0) || val < parseInt(yawRange.min, 0)) { return }
+  resetControl();
   yawRange.value = val;
   yaw.innerHTML = val;
   setMVPMatrix(2 * Math.PI * val / 360, 'rotateYaw');
   draw();
 }
 function setXTranslate(val) {
+  if(val > parseInt(xTranslateRange.max, 0) || val < parseInt(xTranslateRange.min, 0)) { return }
+  resetControl();
   xTranslateRange.value = val;
   xTranslate.innerHTML = val;
   setMVPMatrix(val, 'xTranslate');
   draw();
 }
 function setZTranslate(val) {
+  if(val > parseInt(zTranslateRange.max, 0) || val < parseInt(zTranslateRange.min, 0)) { return }
+  resetControl();
   zTranslateRange.value = val;
   zTranslate.innerHTML = val;
   setMVPMatrix(val, 'zTranslate');
   draw();
 }
 
+function resetControl() {
+  pitchRange.value = 0;
+  pitch.innerHTML = 0;
+  yawRange.value = 0;
+  yaw.innerHTML = 0;
+  xTranslateRange.value = 0;
+  xTranslate.innerHTML = 0;
+  zTranslateRange.value = 0;
+  zTranslate.innerHTML = 0;
+}
 function setMVPMatrix(val, type) {
   mvpMatrix = mat4.create();
   modelMatrix = mat4.create();
