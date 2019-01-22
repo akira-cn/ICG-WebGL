@@ -84,7 +84,7 @@ function getBoardPoints() {
 function gePiecesPoints() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 8; j++) {
-      if(gameBoard[i][j] != 0) {
+      if(gameBoard[i][j] !== 0) {
         piecesNums.push(64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1,
           64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1, 64 + i * 8 + j + 1);
         const center = getPiecesPointCenter(i, j);
@@ -99,7 +99,7 @@ function gePiecesPoints() {
             [0, 1, 1],
             [0, 1, 1]
           );
-        } else if(gameBoard[i][j] == 2) {
+        } else if(gameBoard[i][j] === 2) {
           piecesColors.push(
             [0, 0, 1],
             [0, 0, 1],
@@ -110,7 +110,7 @@ function gePiecesPoints() {
             [0, 1, 0],
             [0, 1, 0]
           );
-        } else if(gameBoard[i][j] == 3) {
+        } else if(gameBoard[i][j] === 3) {
           piecesColors.push(
             [1, 0, 0.5],
             [1, 0, 0.5],
@@ -121,7 +121,7 @@ function gePiecesPoints() {
             [1, 0, 1],
             [1, 0, 1]
           );
-        } else if(gameBoard[i][j] == 4) {
+        } else if(gameBoard[i][j] === 4) {
           piecesColors.push(
             [0, 0.5, 0],
             [0, 0.5, 0],
@@ -190,7 +190,7 @@ function gePiecesPoints() {
 function getPiecesIndex() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 8; j++) {
-      if(gameBoard[i][j] != 0) {
+      if(gameBoard[i][j] !== 0) {
         piecesIndices.push(
           1 + piecesCounter,
           2 + piecesCounter,
@@ -294,9 +294,10 @@ let canvas,
   const eye = vec3.fromValues(0, 0, 3),
     center = vec3.fromValues(0, 0, 0),
     up = vec3.fromValues(0, 1, 0);
-  viewMatrix = mat4.create(),
-  projMatrix = mat4.create(),
-  modelMatrix = mat4.create(),
+
+  viewMatrix = mat4.create();
+  projMatrix = mat4.create();
+  modelMatrix = mat4.create();
   mvpMatrix = mat4.create();
 
   // 初始角度为x轴旋转320
@@ -342,14 +343,14 @@ canvas.onmousedown = function handlerMousedown(evt) {
         lastPosition = position;
         updateGameBoard();
       }
-    } else if(isPieces1Clicked && face < 65 && (position[0] + position[1]) % 2 != 0
+    } else if(isPieces1Clicked && face < 65 && (position[0] + position[1]) % 2 !== 0
     && gameBoard[position[0]][position[1]] === 0) {
       // 棋子1变色后点击棋盘红色区域，棋子跳至点击处
       gameBoard[lastPosition[0]][lastPosition[1]] = 0;
       gameBoard[position[0]][position[1]] = 1;
       updateGameBoard();
       isPieces1Clicked = false;
-    } else if(isPieces2Clicked && face < 65 && (position[0] + position[1]) % 2 != 0
+    } else if(isPieces2Clicked && face < 65 && (position[0] + position[1]) % 2 !== 0
     && gameBoard[position[0]][position[1]] === 0) {
       // 棋子2变色后点击棋盘红色区域，棋子跳至点击处
       gameBoard[lastPosition[0]][lastPosition[1]] = 0;
@@ -557,5 +558,3 @@ function arrayToBuffer(arr, Type = Uint8Array) {
   }
   return buffer;
 }
-
-
