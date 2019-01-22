@@ -1,9 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = function (env = {}) {
-  const outputPath = path.resolve(__dirname, env.outputPath || 'dist');
+  const outputPath = path.resolve(__dirname, env.outputPath || 'docs');
 
   const output = {
     path: outputPath,
@@ -38,13 +39,17 @@ module.exports = function (env = {}) {
     Object.keys(entry).forEach((key) => {
       plugins.push(
         new HtmlWebpackPlugin({
-          template: entry[key].replace(/app$/, 'index.html'),
+          template: entry[key].replace(/app\.js$/, 'index.html'),
           title: key,
           chunks: [],
           filename: `${key}.html`,
         })
       );
     });
+  } else {
+    plugins.push(
+      new OpenBrowserPlugin({url: 'http://localhost:3000'})
+    );
   }
 
   return {

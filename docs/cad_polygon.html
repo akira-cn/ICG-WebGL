@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Check Polygon</title>
+  <title>CAD Rect</title>
   <style>
     #hint {
       position: absolute;
@@ -29,8 +29,9 @@
   <canvas id="gl-canvas" width="512" height="512"></canvas>
   <div id="hint">+</div>
   <div>
-    在画布中点击鼠标绘制图形 <button id="clear">清除</button>
+    在画布中点击鼠标绘制图形，颜色：<input id="colorPicker" type="color" value="#ff0000">
+    <button id="close">绘制</button>
   </div>
-  <script src="/check_polygon/app.js"></script>
+  <script src="/cad_polygon/app.js"></script>
 </body>
 </html>

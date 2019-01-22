@@ -26,7 +26,7 @@
     "chapter10": "webpack-dev-server --watch-poll --env.server=chapter10",
     "chapter11": "webpack-dev-server --watch-poll --env.server=chapter11",
     "chapter12": "webpack-dev-server --watch-poll --env.server=chapter12",
-    "build": "rm -rf dist && webpack --env.production",
+    "build": "rm -rf docs && node ./scripts/build.js && echo 'webgl.group' > docs/CNAME",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -55,6 +55,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "gl-matrix": "^3.0.0",
+    "open-browser-webpack-plugin": "^0.0.5",
     "three": "^0.100.0"
   }
 }
