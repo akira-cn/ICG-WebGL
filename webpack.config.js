@@ -35,6 +35,9 @@ module.exports = function (env = {}) {
     makeEntry(`chapter${`0${i}`.slice(-2)}`);
   }
 
+  makeEntry('glsl');
+  makeEntry('misc');
+
   if(env.production) {
     Object.keys(entry).forEach((key) => {
       plugins.push(

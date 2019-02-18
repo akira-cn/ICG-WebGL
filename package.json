@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --watch-poll",
+    "glsl": "webpack-dev-server --watch-poll --env.server=glsl",
+    "misc": "webpack-dev-server --watch-poll --env.server=misc",
     "chapter1": "webpack-dev-server --watch-poll --env.server=chapter01",
     "chapter2": "webpack-dev-server --watch-poll --env.server=chapter02",
     "chapter3": "webpack-dev-server --watch-poll --env.server=chapter03",
@@ -56,6 +58,7 @@
     "@babel/runtime": "^7.2.0",
     "color-string": "^1.5.3",
     "gl-matrix": "^3.0.0",
+    "glslCanvas": "^0.1.7",
     "open-browser-webpack-plugin": "^0.0.5",
     "three": "^0.100.0"
   }
