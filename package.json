@@ -43,7 +43,7 @@
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
-    "babel-plugin-transform-gl-matrix": "^0.3.1",
+    "babel-plugin-transform-gl-matrix": "^0.3.2",
     "css-loader": "^2.1.0",
     "eslint": "^5.12.0",
     "eslint-config-sprite": "^1.0.6",
