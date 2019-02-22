@@ -24,11 +24,10 @@ let startX,
   startY;
 
 function multq(a, b) {
-  const s = vec3.fromValues(a[1], a[2], a[3]);
-  const t = vec3.fromValues(b[1], b[2], b[3]);
+  const s = vec3(a[1], a[2], a[3]);
+  const t = vec3(b[1], b[2], b[3]);
 
-  return vec4.fromValues(a[0] * b[0] - vec3.dot(s, t), ...vec3.add(vec3.create(), vec3.cross(vec3.create(), t, s),
-    vec3.add(vec3.create(), vec3.scale(vec3.create(), t, a[0]), vec3.scale(vec3.create(), s, b[0]))));
+  return vec4(a[0] * b[0] - vec3.dot(s, t), vec3(t) * vec3(s) + vec3(t) * a[0] + vec3(s) * b[0]);
 }
 
 function trackballView(x, y) {
@@ -104,14 +103,14 @@ function colorCube() {
 }
 
 const vertices = [
-  vec4.fromValues(-0.5, -0.5, 0.5, 1.0),
-  vec4.fromValues(-0.5, 0.5, 0.5, 1.0),
-  vec4.fromValues(0.5, 0.5, 0.5, 1.0),
-  vec4.fromValues(0.5, -0.5, 0.5, 1.0),
-  vec4.fromValues(-0.5, -0.5, -0.5, 1.0),
-  vec4.fromValues(-0.5, 0.5, -0.5, 1.0),
-  vec4.fromValues(0.5, 0.5, -0.5, 1.0),
-  vec4.fromValues(0.5, -0.5, -0.5, 1.0),
+  vec4(-0.5, -0.5, 0.5, 1.0),
+  vec4(-0.5, 0.5, 0.5, 1.0),
+  vec4(0.5, 0.5, 0.5, 1.0),
+  vec4(0.5, -0.5, 0.5, 1.0),
+  vec4(-0.5, -0.5, -0.5, 1.0),
+  vec4(-0.5, 0.5, -0.5, 1.0),
+  vec4(0.5, 0.5, -0.5, 1.0),
+  vec4(0.5, -0.5, -0.5, 1.0),
 ];
 
 const vertexColors = [
@@ -185,7 +184,7 @@ function init() {
   gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
-  rotationQuaternion = vec4.fromValues(1, 0, 0, 0);
+  rotationQuaternion = vec4(1, 0, 0, 0);
   rotationQuaternionLoc = gl.getUniformLocation(program, 'r');
   gl.uniform4fv(rotationQuaternionLoc, rotationQuaternion);
 
@@ -214,11 +213,11 @@ function render() {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   if(trackballMove) {
-    axis = vec3.normalize(vec3.create(), axis);
+    axis = vec3.normalize(axis);
     const c = Math.cos(angle / 2.0);
     const s = Math.sin(angle / 2.0);
 
-    const rotation = vec4.fromValues(c, s * axis[0], s * axis[1], s * axis[2]);
+    const rotation = vec4(c, s * axis[0], s * axis[1], s * axis[2]);
     rotationQuaternion = multq(rotationQuaternion, rotation);
     // console.log(rotationQuaternion);
     gl.uniform4fv(rotationQuaternionLoc, rotationQuaternion);

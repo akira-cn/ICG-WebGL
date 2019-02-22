@@ -34,12 +34,12 @@ function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
   if(count <= 0) {
     tetra(a, b, c, d);
   } else {
-    const ab = vec3.lerp(vec3.create(), a, b, 0.5);
-    const ac = vec3.lerp(vec3.create(), a, c, 0.5);
-    const ad = vec3.lerp(vec3.create(), a, d, 0.5);
-    const bc = vec3.lerp(vec3.create(), b, c, 0.5);
-    const bd = vec3.lerp(vec3.create(), b, d, 0.5);
-    const cd = vec3.lerp(vec3.create(), c, d, 0.5);
+    const ab = vec3.lerp(a, b, 0.5);
+    const ac = vec3.lerp(a, c, 0.5);
+    const ad = vec3.lerp(a, d, 0.5);
+    const bc = vec3.lerp(b, c, 0.5);
+    const bd = vec3.lerp(b, d, 0.5);
+    const cd = vec3.lerp(c, d, 0.5);
 
     --count;
 
@@ -65,10 +65,10 @@ function init() {
   // First, initialize the corners of our gasket with three points.
 
   const vertices = [
-    vec3.fromValues(0.0000, 0.0000, -1.0000),
-    vec3.fromValues(0.0000, 0.9428, 0.3333),
-    vec3.fromValues(-0.8165, -0.4714, 0.3333),
-    vec3.fromValues(0.8165, -0.4714, 0.3333),
+    vec3(0.0000, 0.0000, -1.0000),
+    vec3(0.0000, 0.9428, 0.3333),
+    vec3(-0.8165, -0.4714, 0.3333),
+    vec3(0.8165, -0.4714, 0.3333),
   ];
 
   divideTetra(...vertices);

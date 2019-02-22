@@ -17,9 +17,9 @@ function divideTriangle(a, b, c, count = numTimesToSubdivide) {
   if(count <= 0) {
     points.push(a, b, c);
   } else {
-    const ab = vec2.lerp(vec2.create(), a, b, perturb(0.5));
-    const ac = vec2.lerp(vec2.create(), a, c, perturb(0.5));
-    const bc = vec2.lerp(vec2.create(), b, c, perturb(0.5));
+    const ab = vec2.lerp(a, b, perturb(0.5));
+    const ac = vec2.lerp(a, c, perturb(0.5));
+    const bc = vec2.lerp(b, c, perturb(0.5));
 
     --count;
 
@@ -38,9 +38,9 @@ function init() {
   }
 
   const vertices = [
-    vec2.fromValues(-1, -1),
-    vec2.fromValues(0, 1),
-    vec2.fromValues(1, -1),
+    vec2(-1, -1),
+    vec2(0, 1),
+    vec2(1, -1),
   ];
 
   divideTriangle(...vertices);

@@ -25,17 +25,17 @@ function init() {
   // First, initialize the corners of our gasket with three points.
 
   const vertices = [
-    vec2.fromValues(-1, -1),
-    vec2.fromValues(0, 1),
-    vec2.fromValues(1, -1),
+    vec2(-1, -1),
+    vec2(0, 1),
+    vec2(1, -1),
   ];
 
   // Specify a starting point p for our iterations
   // p must lie inside any set of three vertices
 
-  const u = vec2.add(vec2.create(), vertices[0], vertices[1]);
-  const v = vec2.add(vec2.create(), vertices[0], vertices[2]);
-  let p = vec2.scale(vec2.create(), vec2.add(vec2.create(), u, v), 0.25);
+  const u = vec2(vertices[0]) + vec2(vertices[1]);
+  const v = vec2(vertices[0]) + vec2(vertices[2]);
+  let p = (vec2(u) + vec2(v)) * 0.25;
 
   // And, add our initial point into our array of points
 
@@ -47,8 +47,7 @@ function init() {
 
   for(let i = 0; points.length < NumPoints; ++i) {
     const j = Math.floor(Math.random() * 3);
-    p = vec2.add(vec2.create(), points[i], vertices[j]);
-    vec2.scale(p, p, 0.5);
+    p = (vec2(points[i]) + vec2(vertices[j])) * 0.5;
     points.push(p);
   }
 
@@ -80,14 +79,13 @@ function init() {
 }
 
 function mouseClickHandler(ev) {
-  console.log(ev.button);
-  if(ev.button == 0) {
+  if(ev.button === 0) {
     startDraw = true;
     draw();
-  } else if(ev.button == 1) {
+  } else if(ev.button === 1) {
     startDraw = false;
     counter = NumPoints;
-  } else if(ev.button == 2) {
+  } else if(ev.button === 2) {
     startDraw = false;
   }
 }

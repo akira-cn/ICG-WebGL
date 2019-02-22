@@ -25,14 +25,14 @@ function colorCube() {
 }
 
 const vertices = [
-  vec4.fromValues(-0.5, -0.5, 0.5, 1.0),
-  vec4.fromValues(-0.5, 0.5, 0.5, 1.0),
-  vec4.fromValues(0.5, 0.5, 0.5, 1.0),
-  vec4.fromValues(0.5, -0.5, 0.5, 1.0),
-  vec4.fromValues(-0.5, -0.5, -0.5, 1.0),
-  vec4.fromValues(-0.5, 0.5, -0.5, 1.0),
-  vec4.fromValues(0.5, 0.5, -0.5, 1.0),
-  vec4.fromValues(0.5, -0.5, -0.5, 1.0),
+  vec4(-0.5, -0.5, 0.5, 1.0),
+  vec4(-0.5, 0.5, 0.5, 1.0),
+  vec4(0.5, 0.5, 0.5, 1.0),
+  vec4(0.5, -0.5, 0.5, 1.0),
+  vec4(-0.5, -0.5, -0.5, 1.0),
+  vec4(-0.5, 0.5, -0.5, 1.0),
+  vec4(0.5, 0.5, -0.5, 1.0),
+  vec4(0.5, -0.5, -0.5, 1.0),
 ];
 
 const vertexColors = [

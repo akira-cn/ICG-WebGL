@@ -21,9 +21,9 @@ function makeRect(vBuffer, cBuffer, ox, oy, w, h) {
   const y = -1 + 2 * (h - oy) / h;
 
   if(pointsTemp) {
-    const p1 = vec2.fromValues(pointsTemp[0], y);
-    const p2 = vec2.fromValues(x, y);
-    const p3 = vec2.fromValues(x, pointsTemp[1]);
+    const p1 = vec2(pointsTemp[0], y);
+    const p2 = vec2(x, y);
+    const p3 = vec2(x, pointsTemp[1]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferSubData(gl.ARRAY_BUFFER, 8 * pointsCount, pointsToBuffer([p1, p2, p3]));
@@ -34,7 +34,7 @@ function makeRect(vBuffer, cBuffer, ox, oy, w, h) {
     colorTemp = null;
     pointsCount += 3;
   } else {
-    pointsTemp = vec2.fromValues(x, y);
+    pointsTemp = vec2(x, y);
     colorTemp = color;
 
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);

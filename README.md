@@ -16,6 +16,7 @@
 - 使用Babel7
 - 增加练习题参考答案
 - 替换MV.js和MV2.js为[gl-matrix](https://github.com/toji/gl-matrix)
+- 使用[transform-gl-matrix](https://github.com/akira-cn/babel-plugin-transform-gl-matrix)插件简化gl-matrix的API
 - 重写部分Utils功能，组织到一个简单的工具库GLHelper中
 - 使用Webpack打包，使用[glsl-shader-loader](https://github.com/migalooo/glsl-shader-loader)加载shader文件
 - 使用[eslint-config-sprite](https://github.com/spritejs/eslint-config-sprite)

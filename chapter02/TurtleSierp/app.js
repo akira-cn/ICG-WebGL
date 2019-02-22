@@ -16,7 +16,7 @@ class Turtle {
     this.x = x;
     this.y = y;
     this._penStatus = 'down';
-    this._points = [[vec2.fromValues(x, y)]];
+    this._points = [[vec2(x, y)]];
     this._initGl();
     this._timer = null;
   }
@@ -31,7 +31,7 @@ class Turtle {
     this.y += distance * Math.sin((Math.PI * this.theta) / 180.0);
     if(this._penStatus === 'down') {
       const points = this._points;
-      points[points.length - 1].push(vec2.fromValues(this.x, this.y));
+      points[points.length - 1].push(vec2(this.x, this.y));
       // 防抖
       clearTimeout(this._timer);
       this._timer = setTimeout(() => {
@@ -66,7 +66,7 @@ class Turtle {
       this._points.push([]);
     } else if(action === 'down') {
       const segment = this._points[this._points.length - 1];
-      segment[0] = vec2.fromValues(this.x, this.y);
+      segment[0] = vec2(this.x, this.y);
     }
   }
 

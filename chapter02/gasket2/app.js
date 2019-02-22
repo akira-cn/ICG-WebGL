@@ -13,9 +13,9 @@ function divideTriangle(a, b, c, count = numTimesToSubdivide) {
   if(count <= 0) {
     points.push(a, b, c);
   } else {
-    const ab = vec2.lerp(vec2.create(), a, b, 0.5);
-    const ac = vec2.lerp(vec2.create(), a, c, 0.5);
-    const bc = vec2.lerp(vec2.create(), b, c, 0.5);
+    const ab = vec2.lerp(a, b, 0.5);
+    const ac = vec2.lerp(a, c, 0.5);
+    const bc = vec2.lerp(b, c, 0.5);
 
     --count;
 
@@ -40,9 +40,9 @@ function init() {
   // First, initialize the corners of our gasket with three points.
 
   const vertices = [
-    vec2.fromValues(-1, -1),
-    vec2.fromValues(0, 1),
-    vec2.fromValues(1, -1),
+    vec2(-1, -1),
+    vec2(0, 1),
+    vec2(1, -1),
   ];
 
   divideTriangle(...vertices);

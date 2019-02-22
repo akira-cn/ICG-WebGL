@@ -36,12 +36,12 @@ function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
   if(count <= 0) {
     tetra(a, b, c, d);
   } else {
-    const ab = vec3.lerp(vec3.create(), a, b, perturb(0.5));
-    const ac = vec3.lerp(vec3.create(), a, c, perturb(0.5));
-    const ad = vec3.lerp(vec3.create(), a, d, perturb(0.5));
-    const bc = vec3.lerp(vec3.create(), b, c, perturb(0.5));
-    const bd = vec3.lerp(vec3.create(), b, d, perturb(0.5));
-    const cd = vec3.lerp(vec3.create(), c, d, perturb(0.5));
+    const ab = vec3.lerp(a, b, perturb(0.5));
+    const ac = vec3.lerp(a, c, perturb(0.5));
+    const ad = vec3.lerp(a, d, perturb(0.5));
+    const bc = vec3.lerp(b, c, perturb(0.5));
+    const bd = vec3.lerp(b, d, perturb(0.5));
+    const cd = vec3.lerp(c, d, perturb(0.5));
 
     --count;
 
@@ -63,10 +63,10 @@ function init() {
   renderer.setClearColor(new THREE.Color(0xffffff));
   renderer.setSize(512, 512);
   const vertices = [
-    vec3.fromValues(0.0, 0.0, 1.0),
-    vec3.fromValues(0.0, 1.0, 0.3333),
-    vec3.fromValues(-1.0, -1.0, 0.3333),
-    vec3.fromValues(1.0, -1.0, 0.3333),
+    vec3(0.0, 0.0, 1.0),
+    vec3(0.0, 1.0, 0.3333),
+    vec3(-1.0, -1.0, 0.3333),
+    vec3(1.0, -1.0, 0.3333),
   ];
 
   triangle(vertices[1], vertices[2], vertices[3], BROWN);

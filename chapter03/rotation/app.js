@@ -16,10 +16,10 @@ function init() {
   }
 
   const vertices = [
-    vec2.fromValues(0.0, 0.5),
-    vec2.fromValues(0.5, 0.0),
-    vec2.fromValues(-0.5, 0.0),
-    vec2.fromValues(0.0, -0.5),
+    vec2(0.0, 0.5),
+    vec2(0.5, 0.0),
+    vec2(-0.5, 0.0),
+    vec2(0.0, -0.5),
   ];
 
   //
