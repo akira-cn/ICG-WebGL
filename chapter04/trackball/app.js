@@ -217,7 +217,7 @@ function render() {
     const c = Math.cos(angle / 2.0);
     const s = Math.sin(angle / 2.0);
 
-    const rotation = vec4(c, s * axis[0], s * axis[1], s * axis[2]);
+    const rotation = vec4(c, vec3(axis) * s);
     rotationQuaternion = multq(rotationQuaternion, rotation);
     // console.log(rotationQuaternion);
     gl.uniform4fv(rotationQuaternionLoc, rotationQuaternion);
