@@ -26,7 +26,7 @@ function addVertex(vBuffer, cBuffer, ox, oy, w, h) {
   const y = -1 + 2 * (h - oy) / h;
 
   const polygon = polygons[polygons.length - 1];
-  const vertex = vec2.fromValues(x, y);
+  const vertex = vec2(x, y);
 
   const idx = polygon.index + polygon.vertexes;
 

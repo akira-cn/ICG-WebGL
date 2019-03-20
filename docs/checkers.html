@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>checkers</title>
+    <style>
+        #pitch,#yaw,#xTranslate,#zTranslate {
+          display: inline-block;
+          width: 30px;
+        }
+      </style>
+  </head>
+
+  <body>
+      <div id="controller">
+          俯仰角<span id="pitch">320</span> <button id="pitchDown">-</button>
+          <input id="pitchRange" type="range" min="0" max="360" step="2" value="320">
+          <button id="pitchUp">+</button>
+          旋转角<span id="yaw">0</span> <button id="yawDown">-</button>
+          <input id="yawRange" type="range" min="0" max="360" step="2" value="0">
+          <button id="yawUp">+</button>
+          x轴移动<span id="xTranslate">0</span> <button id="xTranslateDown">-</button>
+          <input id="xTranslateRange" type="range" min="-2" max="2" step="0.2" value="0">
+          <button id="xTranslateUp">+</button>
+          z轴移动<span id="zTranslate">0</span> <button id="zTranslateDown">-</button>
+          <input id="zTranslateRange" type="range" min="-3" max="3" step="0.2" value="0">
+          <button id="zTranslateUp">+</button>
+        </div>
+    <canvas id="gl-canvas" width="512" height="512"></canvas>
+    <script src="/checkers/app.js"></script>
+  </body>
+</html>

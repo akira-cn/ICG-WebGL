@@ -10,9 +10,9 @@ const points = [];
 const MAX_DEPTH = 5;
 
 function divideLineSegment(a, b, depth = 0) {
-  const c = vec2.lerp(vec2.create(), a, b, 1 / 3);
-  const d = vec2.lerp(vec2.create(), a, b, 2 / 3);
-  const e = vec2.rotate(vec2.create(), d, c, Math.PI / 3);
+  const c = vec2.lerp(a, b, 1 / 3);
+  const d = vec2.lerp(a, b, 2 / 3);
+  const e = vec2.rotate(d, c, Math.PI / 3);
   if(depth < MAX_DEPTH) {
     depth++;
     divideLineSegment(a, c, depth);
@@ -39,9 +39,9 @@ function init() {
   }
 
   const vertices = [
-    vec2.fromValues(-0.5, -0.5),
-    vec2.fromValues(0, 0.5),
-    vec2.fromValues(0.5, -0.5),
+    vec2(-0.5, -0.5),
+    vec2(0, 0.5),
+    vec2(0.5, -0.5),
   ];
 
   divideTriangle(...vertices);

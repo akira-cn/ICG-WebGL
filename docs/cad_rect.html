@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CAD Rect</title>
+  <style>
+    #hint {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      line-height: 12px;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      display: none;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.4);
+      color: white;
+    }
+    #hint.show {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gl-canvas" width="512" height="512"></canvas>
+  <div id="hint">+</div>
+  <div>
+    再画布中点击鼠标绘制图形，颜色：<input id="colorPicker" type="color" value="#ff0000">
+  </div>
+  <script src="/cad_rect/app.js"></script>
+</body>
+</html>

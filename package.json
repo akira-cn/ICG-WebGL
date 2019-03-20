@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --watch-poll",
+    "glsl": "webpack-dev-server --watch-poll --env.server=glsl",
+    "misc": "webpack-dev-server --watch-poll --env.server=misc",
     "chapter1": "webpack-dev-server --watch-poll --env.server=chapter01",
     "chapter2": "webpack-dev-server --watch-poll --env.server=chapter02",
     "chapter3": "webpack-dev-server --watch-poll --env.server=chapter03",
@@ -26,7 +28,7 @@
     "chapter10": "webpack-dev-server --watch-poll --env.server=chapter10",
     "chapter11": "webpack-dev-server --watch-poll --env.server=chapter11",
     "chapter12": "webpack-dev-server --watch-poll --env.server=chapter12",
-    "build": "rm -rf dist && webpack --env.production",
+    "build": "rm -rf docs && node ./scripts/build.js && echo 'webgl.group' > docs/CNAME",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -41,6 +43,7 @@
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "babel-plugin-transform-gl-matrix": "^0.3.2",
     "css-loader": "^2.1.0",
     "eslint": "^5.12.0",
     "eslint-config-sprite": "^1.0.6",
@@ -54,7 +57,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
+    "color-string": "^1.5.3",
     "gl-matrix": "^3.0.0",
+    "glslCanvas": "^0.1.7",
     "open-browser-webpack-plugin": "^0.0.5",
     "three": "^0.100.0"
   }
