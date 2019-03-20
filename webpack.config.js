@@ -2,9 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = function (env = {}) {
-  const outputPath = path.resolve(__dirname, env.outputPath || 'dist');
+  const outputPath = path.resolve(__dirname, env.outputPath || 'docs');
 
   const output = {
     path: outputPath,
@@ -35,11 +36,14 @@ module.exports = function (env = {}) {
     makeEntry(`chapter${`0${i}`.slice(-2)}`);
   }
 
+  makeEntry('glsl');
+  makeEntry('misc');
+
   if(env.production) {
     Object.keys(entry).forEach((key) => {
       plugins.push(
         new HtmlWebpackPlugin({
-          template: entry[key].replace(/app$/, 'index.html'),
+          template: entry[key].replace(/app\.js$/, 'index.html'),
           title: key,
           chunks: [],
           filename: `${key}.html`,
@@ -48,7 +52,8 @@ module.exports = function (env = {}) {
     });
   } else {
     plugins.push(
-      new OpenBrowserPlugin({url: 'http://localhost:3000'})
+      new OpenBrowserPlugin({url: 'http://localhost:3000'}),
+      new webpack.HotModuleReplacementPlugin(),
     );
   }
 
@@ -96,6 +101,7 @@ module.exports = function (env = {}) {
       contentBase: path.join(__dirname, env.server || '.'),
       compress: true,
       port: 3000,
+      hot: true,
       // ...
     },
 
