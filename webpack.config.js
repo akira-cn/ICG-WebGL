@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = function (env = {}) {
   const outputPath = path.resolve(__dirname, env.outputPath || 'docs');
@@ -51,7 +52,8 @@ module.exports = function (env = {}) {
     });
   } else {
     plugins.push(
-      new OpenBrowserPlugin({url: 'http://localhost:3000'})
+      new OpenBrowserPlugin({url: 'http://localhost:3000'}),
+      new webpack.HotModuleReplacementPlugin(),
     );
   }
 
@@ -99,6 +101,7 @@ module.exports = function (env = {}) {
       contentBase: path.join(__dirname, env.server || '.'),
       compress: true,
       port: 3000,
+      hot: true,
       // ...
     },
 
