@@ -1,10 +1,13 @@
 import generateMaze from '../../common/maze';
 
-const maze = generateMaze(10, 10);
+const WIDTH = 20;
+const HEIGHT = 20;
+
+const maze = generateMaze(WIDTH, HEIGHT);
 const container = document.getElementById('container');
 
-for(let i = 0; i < 10; i++) {
-  for(let j = 0; j < 10; j++) {
+for(let i = 0; i < HEIGHT; i++) {
+  for(let j = 0; j < WIDTH; j++) {
     const block = document.createElement('div');
     const blockData = maze[i][j];
     block.className = 'block';
