@@ -14,6 +14,9 @@ function checkChapter(fileName) {
   if(fs.existsSync(path.resolve(__dirname, '..', 'glsl', fileName))) {
     return 'glsl';
   }
+  if(fs.existsSync(path.resolve(__dirname, '..', 'misc', fileName))) {
+    return 'misc';
+  }
   return 0;
 }
 
@@ -55,7 +58,7 @@ function checkChapter(fileName) {
     return '';
   }),
   `<h2>glsl 练习</h2><ul>${pages.filter(p => p[2] === 'glsl').map(buildItem).join('')}</ul>`,
-  // `<h2>其他</h2><ul>${pages.filter(p => p[2] === 0).map(buildItem).join('')}</ul>`,
+  `<h2>其他</h2><ul>${pages.filter(p => p[2] === 'misc').map(buildItem).join('')}</ul>`,
   ].join('')}
   <div id="github_fork" style="position:absolute;top:0;right:0;width:80px;height:80px;z-index:99999;">
     <a href="https://github.com/akira-cn/ICG-WebGL">
