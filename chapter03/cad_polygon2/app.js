@@ -45,7 +45,7 @@ function getDirection(points) {
   const v1 = vec2(p1) - vec2(p2);
   const v2 = vec2(p3) - vec2(p2);
 
-  const d = (vec2(v1) * vec2(v2))[2];
+  const d = (vec2.cross(v1, v2))[2];
 
   if(d === 0) return 0;
   return d > 0 ? 1 : -1;
@@ -64,7 +64,7 @@ function getAngle(points, idx, direction) {
   const v2 = vec2(p3) - vec2(p2);
 
   const angle = vec2.angle(v1, v2);
-  const d = (vec2(v1) * vec2(v2))[2];
+  const d = (vec2.cross(v1, v2))[2];
 
   if(direction * d >= 0) return angle;
   return 2 * Math.PI - angle;
@@ -75,8 +75,8 @@ function isCross(p1, p2, p3, p4) {
   const v2 = vec2(p1) - vec2(p3);
   const v3 = vec2(p2) - vec2(p3);
 
-  const z1 = (vec2(v1) * vec2(v2))[2];
-  const z2 = (vec2(v1) * vec2(v3))[2];
+  const z1 = (vec2.cross(v1, v2))[2];
+  const z2 = (vec2.cross(v1, v3))[2];
 
   return z1 * z2 <= 0;
 }
