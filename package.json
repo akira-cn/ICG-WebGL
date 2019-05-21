@@ -61,6 +61,7 @@
     "gl-matrix": "^3.0.0",
     "glslCanvas": "^0.1.7",
     "open-browser-webpack-plugin": "^0.0.5",
-    "three": "^0.100.0"
+    "three": "^0.104.0",
+    "three.meshline": "^1.2.0"
   }
 }
