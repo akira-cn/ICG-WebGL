@@ -1,7 +1,12 @@
-import GlslCanvas from 'glslCanvas';
+import GlRenderer from 'gl-renderer';
 import shader from './shader.frag';
 
-const canvas = document.getElementById('gl-canvas');
-const sandbox = new GlslCanvas(canvas);
+(async function () {
+  const canvas = document.getElementById('gl-canvas');
+  const renderer = new GlRenderer(canvas);
 
-sandbox.load(shader);
+  const program = await renderer.compile(shader);
+  renderer.useProgram(program);
+
+  renderer.render();
+}());
