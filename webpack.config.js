@@ -54,6 +54,7 @@ module.exports = function (env = {}) {
     plugins.push(
       new OpenBrowserPlugin({url: 'http://localhost:3000'}),
       new webpack.HotModuleReplacementPlugin(),
+      new webpack.SourceMapDevToolPlugin({}),
     );
   }
 
