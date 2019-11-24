@@ -3,11 +3,12 @@ precision mediump float;
 varying vec2 fTexCoord;
 
 uniform sampler2D texture;
+uniform float blurDistance;
 
 void main()
 {
   float s = 4.0;
-  float d = 1.0 / 1024.0;
+  float d = blurDistance / 1024.0;
   float x = fTexCoord.x;
   float y = fTexCoord.y;
 

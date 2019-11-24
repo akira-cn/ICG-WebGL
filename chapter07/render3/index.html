@@ -13,6 +13,23 @@
 
   <div class="container">
     <canvas id="gl-canvas" width="1024" height="1024"></canvas>
+
+    <div class="control-panel">
+      <label class="control-item">
+        设定分形次数：
+        <input id="divide" type="number" value="5" min="0" max="13"/>
+      </label>
+
+      <button id="reset" class="control-item">重新绘制</button>
+
+      <label class="control-item">
+        设定模糊距离：
+        <input id="distance" type="number" value="1"/>
+      </label>
+
+      <button id="once" class="control-item">应用模糊</button>
+      <button id="play" class="control-item">播放/暂停</button>
+    </div>
   </div>
 
   <script src="/render3/app.js"></script>

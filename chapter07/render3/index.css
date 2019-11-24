@@ -7,5 +7,22 @@ body {
 
 .container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+
+  height: auto;
+  width: 100%;
+}
+
+.control-panel {
+  display: flex;
+  height: 400px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+input,
+label,
+button {
+  width: 120px;
 }
