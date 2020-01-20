@@ -1,5 +1,11 @@
 import {vec3, vec4} from 'gl-matrix';
 
+
+/**
+ * @param {HTMLCanvasElement} canvas
+ * @param {WebGLContextAttributes} opt_attribs
+ * @returns {WebGLRenderingContext|null}
+ */
 export function create3DContext(canvas, opt_attribs) {
   const names = ['webgl', 'experimental-webgl', 'webkit-3d', 'moz-webgl'];
   let context = null;
@@ -31,6 +37,11 @@ const GET_A_WEBGL_BROWSER = `This page requires a browser that supports WebGL.<b
 const OTHER_PROBLEM = `It doesn't appear your computer can support WebGL.<br/>
 <a href="http://get.webgl.org/troubleshooting/">Click here for more information.</a>`;
 
+/**
+ * @param {HTMLCanvasElement} canvas
+ * @param {WebGLContextAttributes} opt_attribs
+ * @returns {WebGLRenderingContext}
+ */
 export function setupWebGL(canvas, opt_attribs) {
   function showLink(str) {
     const container = canvas.parentNode;
@@ -51,6 +62,13 @@ export function setupWebGL(canvas, opt_attribs) {
   return context;
 }
 
+
+/**
+ * @param {WebGLRenderingContext} gl
+ * @param {string} vertex
+ * @param {string} fragment
+ * @returns {WebGLProgram}
+ */
 export function createProgram(gl, vertex, fragment) {
   const vertShdr = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertShdr, vertex);
