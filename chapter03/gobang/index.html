@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>GoBang</title>
+<style>
+  body{
+    margin: 0;
+  }
+  #last{
+    display: none;
+    color: red;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+  }
+  #winner{
+    vertical-align: top;
+    color: red;
+    font-size: 30px;
+  }
+</style>
+</head>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+<span id="winner"></span>
+<span id="last">+</span>
+<script type="text/javascript" src="/gobang/app.js"></script>
+</body>
+</html>
