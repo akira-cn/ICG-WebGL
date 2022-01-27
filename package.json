@@ -63,7 +63,7 @@
     "style-loader": "^0.23.1",
     "svg-mesh-3d": "^1.1.0",
     "svg-path-contours": "^2.0.0",
-    "three": "^0.125.0",
+    "three": "^0.137.0",
     "three.meshline": "^1.2.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
