@@ -145,6 +145,7 @@ function init() {
   clearBtn.addEventListener('click', () => {
     hintEl.className = '';
     isSimple = true;
+    isConvex = true;
     points.length = 0;
     direction = 0;
   });
